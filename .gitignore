@@ -6,3 +6,4 @@
 .classpath
 sac*/.classpath
 sac*/.settings
+sac*/target/
