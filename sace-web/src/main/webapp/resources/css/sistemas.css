@@ -1,0 +1,876 @@
+/*---------------------------------------------------*/
+/* Hoja de Estilos para los Sistemas Escolares       */
+/*---------------------------------------------------*/
+
+/*----------------------------*/
+/*         Generales          */
+/*----------------------------*/
+
+/*El boton de Ingresar en el login */
+.btnIngresar {
+	margin-top:45px;	
+}
+
+/*Pie fijo*/
+#pieFijo { 
+    width               : 100%; 
+}    
+/*Notas en general*/
+.nota {
+	font-size           : 14px;
+}
+/*Iconos de Exportar*/
+.fa-file-excel-o:hover {
+	color               : green;
+	-webkit-transition  : background-color 200ms ease-out;
+	-moz-transition     : background-color 200ms ease-out;	
+}
+.fa-file-pdf-o:hover {
+	color               : red;
+	-webkit-transition  : background-color 200ms ease-out;
+	-moz-transition     : background-color 200ms ease-out;	
+}
+/*Clases para tipos de ARES*/
+.urbana {
+	background       : #d4e4f5;
+	padding          : 3px 6px;
+}
+.noUrbana {
+	background       : #e5e988;
+	padding          : 3px 6px;
+}
+.mixta {
+	background       : #feb38d;
+	padding          : 3px 6px;
+}
+/*Restaurar combos delgados*/
+select[size] {
+	height           : 34px;
+}
+/*Espacio entre etiqueta y span */
+.espacioLabel label {
+	padding-right    : 10px;
+}
+/*Clase para eliminar padding en form-control*/
+.faltaJustificada .form-control {
+	padding             : 6px 2px;
+}
+/*Clase para el numero de acta*/
+.indicador {
+	width            : 52px;    
+	border           : 1px solid #463a70;    
+	border-radius    : 35px;    
+	background-color : #463a70;
+	text-align 		 : center;
+}
+.indicador h1 { 
+	margin-top   : 7px;    
+	color        : whitesmoke;
+}
+/*Clase para Paginaci����n*/
+.seleccionado {
+	color            : #fff;
+	background-color : #3a012a;
+	text-shadow      : none;
+	padding          : 2px 10px;
+}
+.noDisponible {
+	color            : #AFA8A8;
+	text-shadow      : none;
+	padding          : 2px 10px;
+}
+section div .row a {
+	text-decoration: 
+}
+
+/*Clases necesarias para el Big Menu*/
+.yamm .nav, .yamm .collapse, .yamm .dropup, .yamm .dropdown {
+	position : static;
+}
+.yamm .container {
+	position : relative;
+}
+.yamm .dropdown-menu {
+	left     : auto;
+}
+.yamm .nav.navbar-right .dropdown-menu {
+	left     : auto;
+	right    : 0;
+}
+.yamm .yamm-content {
+	padding  : 20px 30px;
+}
+.yamm .dropdown.yamm-fw .dropdown-menu {
+	left     : 0;
+	right    : 0;
+}
+/*Clases para los mensajes de error de Javascript*/
+.error {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 11px;
+	line-height: 1.42857143;
+	color: #e50000;
+	font-weight: normal;
+}
+.has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline {
+	color: #FF2828;
+}
+.dropdown:hover .dropdown-menu .dropdown-toggle:hover .dropdown:hover .dropdown-menu:hover{
+    display: block;
+    color: #FFF;
+    background-color: #22ADFF;
+    text-shadow: none;
+}
+.obligatorio {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #E22929;
+}
+/*Clases para alinear los encabezados*/
+.input { 
+	box-shadow: 0 0 3px #CC0000; 
+	margin: 10px 
+}
+/*Titulo Sistema*/
+.tituloForm {
+	border: none;
+	padding: none
+	margin-bottom: none;
+	background: none;
+}
+h1 {
+	color            : #732a3b; 
+	font-size        : 30px;
+	font-weight      : bold;
+}
+h1, h2{
+	margin-top: 6px;
+	margin-bottom: 10px;
+}
+.fa-2x {
+	font-size        : 26px;
+}
+/*Centrar logo del sistema en la pleca*/
+.centerImg {
+	margin-top       : 65px;
+	margin-left      : 62px;
+}
+/*Color de fondo*/
+body {
+	background       : #f2f2f2;
+}
+/*Titulo Sistema*/
+h1 {
+	color            : #564980; 
+}
+/*Avisos contenidos en las secciones*/
+.avisosSeccion {
+	background       : #e5eef3;
+}
+/*Subtitulos dentro de sections*/
+.subtitulos {
+	background     : #F6F3F6;
+	margin-right   : -20px;
+	margin-left    : -20px;
+	padding-left   : 30px;
+	padding-top    : 10px;
+	padding-bottom : 10px;
+}
+
+
+
+/*----------------------------*/
+/*        Encabezado          */
+/*----------------------------*/
+.fondoEncabezado {
+	background-image      : url("#{resource['img:TEXTURAPAK2.jpg']}");
+	background-position   : 0 85px;
+}
+.navbar-header img{
+	position              : absolute;
+	top                   : -65px;
+}
+/*Para Home ����nico*/
+.navbar-header img #logoHome .centerimg .logoINE {
+	position              : absolute !important;
+	top                   : -48px !important;
+}
+/*Checar*/
+.navbar-header .pendon {
+	position              : absolute;
+	top                   : -73px;
+}
+.logoHome {
+	position              : absolute;
+	top                   : -48px;
+}
+header {
+	background         : #0b56a6; /*Fondo azul*/
+}
+header h3 {
+	color              : #ffffff;
+	text-shadow        : 1px 1px 3px #000;
+	margin-top: 10px;
+	margin-bottom: 27px;
+}
+header .container {
+	max-width           : 1170px;
+	padding-bottom      : 23px;
+}
+/*Tama����o del menu desplegable del perfil de usuario*/
+header .yamm .yamm-content {
+	padding            : 5px 78px;
+	padding-left       : 247px;
+}
+header .yamm ul li label{
+	margin-left        : 30px;
+	margin-right       : 30px;
+}
+header .navbar-default .navbar-nav > li > a {
+	color               : #e2d2ae;
+	font-size           : 15px;
+	margin-top          : -10px;
+	background          : #3a012a;
+}
+header .navbar-default {
+	height: 0;
+}
+header .nav .caret {
+	border-top-color    : #e2d2ae;
+}
+
+.encabezado .navbar-nav li  a {
+	padding-top         : 13px;
+	padding-bottom      : 3px;
+}
+.encabezado .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+	color               : #0000ff;
+	background-color    : #e2d2ae ;
+}
+/*Hover para el perfil del usuario en el encabezado*/
+.encabezado .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+	color               : #3a012a;
+	background          : #e2d2ae;
+	-webkit-transition  : background-color 300ms ease-out;
+	-moz-transition     : background-color 300ms ease-out;
+}
+.encabezado .navbar-default .navbar-nav > .open > a:focus {
+	color               : #3a012a;
+	background-color    : #e2d2ae;
+}
+header .col-md-2 {
+    padding-right       : 0px;
+    padding-left        : 0px;
+    margin-top          : 15px;
+    margin-right        : 0px;
+}
+.container .row {
+	margin-top          : 5px;
+}
+.container .row p {
+	margin-top          : 8px;
+}
+header .navbar {
+	position            : relative;
+	z-index             : 1000;
+	min-height          : 30px;
+	margin-bottom       : 20px;
+	border              : 1px solid transparent;
+}
+
+
+/*----------------------------*/
+/*   Home Unico               */
+/*                            */
+/*----------------------------*/
+/*Listado Sistemas*/
+.listadoSistemas {
+	background          : #58585A;
+}
+.listadoSistemas .row {
+	margin-bottom       : 15px;
+}
+.listadoSistemas h3 {
+	color               : #79E1EB; 
+}
+.listadoSistemas ul li {
+	color               : #FFFFFF; 
+	padding             : 3px 10px;
+	margin-left         : -47px;
+}
+.listadoSistemas .fa-caret-right {
+	padding-left        : 5px;
+	font-size           : 18px;
+    -webkit-transform   : rotate(225deg);
+    -moz-transform      : rotate(225deg);
+    -ms-transform       : rotate(225deg);
+    -o-transform        : rotate(225deg);
+    transform           : rotate(225deg);
+}
+/*.listadoSistemas a {
+	color               : #FFFFFF; 
+	padding             : -1px 20px;
+}*/
+.listadoSistemas ul {
+    list-style          : none;
+}
+.listadoSistemas li:hover {
+	text-decoration     : none;
+	font-weight         : bold;
+	background          : #A90065;
+	-webkit-transition  : background-color 200ms ease-out;
+	-moz-transition     : background-color 200ms ease-out;	
+}
+.listadoSistemas a:hover {
+	text-decoration     : none;
+	/*font-weight         : bold;*/
+	/*background          : #A90065;*/
+	-webkit-transition  : background-color 200ms ease-out;
+	-moz-transition     : background-color 200ms ease-out;	
+}
+/*Linea del Tiempo*/
+.CTiempo {
+	background-color    : #ffffff;
+	height              : 200px;
+	padding-top         : 15px; 
+}
+.CTiempo h3 {
+	color               : #882661;
+}
+/*Avisos importantes*/
+.avisosImportantes {
+	background-color    : #FFF; 
+}
+.avisosClasificados {
+	background-color    : #ECEDED;	
+}
+.avisosClasificados h3 {
+	color               : #A90065;
+	padding-top         : 12px;
+}
+.avisosClasificados .tab-pane {
+	padding             : 20px;
+	padding-top         : 30px;
+	overflow-y          : scroll;
+	height              : 380px;
+}
+.avisosClasificados .fecha {
+	color: #A90065;
+} 
+.avisosClasificados hr {
+	background-color    : #000;
+	height              : 1px;
+}
+.avisosClasificados .nav-tabs li a {
+	margin-right        : 2px;
+	line-height         : 1.428571429;
+	border              : 1px solid transparent;
+	border-radius       : 0px 0px 0 0;
+	background-color    : #540851;
+	color               : #FFFFFF;
+	font-weight         : bold;
+}
+.avisosClasificados .nav-tabs li a:hover {
+	margin-right        : 2px;
+	line-height         : 1.428571429;
+	border              : 1px solid transparent;
+	border-radius       : 0px 0px 0 0;
+	background-color    : #7B4778;
+	color               : #FFFFFF;
+	font-weight         : bold;
+	-webkit-transition  : background-color 400ms ease-out;
+	-moz-transition     : background-color 400ms ease-out;
+}
+.avisosClasificados .nav-tabs.nav-justified  .active  a {
+	border-bottom-color :#7B4778; 
+}
+.nav-tabs  li.active  a, .nav-tabs  li.active  a:hover, .nav-tabs  li.active  a:focus {
+	color               : #FFFFFF;
+	font-weight         : bold;
+	background-color    : #7B4778;
+}
+.nav-tabs .active:after {
+    border-left         : 10px solid transparent;
+    border-right        : 11px solid transparent; content:"";
+	border-top          : 13px solid #7B4778;
+    position            : absolute;
+    bottom              : -13px;
+    width               : 0px;
+    left                : 50%;
+    margin-left         : -10px;	
+}
+/*chat*/
+.mensajesUsuario {
+	background-color    : #DCD8C9;
+	height              : 473px;
+	box-shadow          : 2px 7px 7px 0px rgba(0, 0, 0, 0.4);
+}
+.mensajesUsuario h3 {
+	background          : #58585A;
+	padding             : 10px 10px;
+	color               : #FFFFFF;
+}
+/*BI*/
+.tablaBI {
+	background-color    : #FFFFFF;
+	padding             : 30px 10px; 
+}
+.tablaBI h3 {
+	padding-bottom      : 20px;
+	color               : #564980;
+}
+
+
+
+/*----------------------------*/
+/*         Big menu           */
+/*----------------------------*/
+.dropdown-toggle{
+	font-size           : 16px;
+	color               : #FFFFFF;
+}
+.navbar .row {
+	font-weight         : normal;
+	background          : #3a012a;
+	color               : #FFFFFF;
+}
+.navbar-default { /* El color del fondo del menu */
+	background-color    : #004080;
+	border-color        : #004080;
+	border-bottom-color : #004080;
+}
+/*Quitando clase para eliminar espacio abajo de Big Menu*/
+.yamm label {
+	font-size           : 16px;
+}
+.yamm .yamm-content ul a {
+	color               : #000000;
+	text-decoration     : underline;
+}
+/*Verificar */
+.navbar-collapse li a:hover, a:focus  {
+	color               : #000000;
+	text-decoration     : none;
+	background-color    : #fbff96; /*#f2eee2*/
+	-webkit-transition: background-color 200ms ease-out;
+	-moz-transition: background-color 200ms ease-out;	
+}
+.yamm-content .row {
+	background          : #FFFFFF;
+	color               : #3a012a;
+}
+.yamm-content li {
+	padding             : 8px;
+	padding-left        : 8px;
+	font-size           : 15px;
+}
+.yamm-content ul li:hover {
+	background          : #fbff96;
+	-webkit-transition: background-color 300ms ease-out;
+	-moz-transition: background-color 300ms ease-out;
+}
+/*Para alineal Big Menu*/
+/*Checar con otros sistemas para verificar si no hay error*/
+.navbar-collapse ul ul, ol ul, ul ol, ol ol {
+	margin-bottom       : 0;
+	list-style          : none;
+	margin-left         : 0px;
+}
+/*.navbar-collapse ul ul, ol ul, ul ol, ol ol {
+	margin-bottom       : 0;
+	list-style          : none;
+	margin-left         : -47px;
+}*/
+.navbar-collapse ul a li{
+	padding-left        : 10px;
+}
+/*.yamm .yamm-content {
+	padding             : 20px 30px;
+	padding-left        : 64px;
+}*/
+a:focus {
+	color               : #555555;
+	background-color    : #cbddf3;
+}
+li .btn {
+	background-color    : #ac1f53;
+	color               : #FFFFFF;
+	border-color        : #ac1f53;
+	right               : 45px;
+	margin-top          : 8px;
+	-webkit-transition: background-color 300ms ease-out;
+	-moz-transition: background-color 300ms ease-out;
+}
+li .btn:hover {
+	background          : #f6358b;
+	color               : #FFFFFF;
+}
+/*Para anchor con clase btn*/
+.yamm .btn-default {
+	background-color    : #ac1f53;
+	color               : #FFFFFF;
+	border-color        : #ac1f53;
+	right               : 45px;
+	margin-top          : 8px;
+	-webkit-transition: background-color 300ms ease-out;
+	-moz-transition: background-color 300ms ease-out;
+}
+.yamm .btn-default:hover {
+	background          : #f6358b;
+	color               : #FFFFFF;
+}
+/*fin para anchor con clase btn*/
+.navbar-default .navbar-nav > li > a {
+	color               : #FFFFFF;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+	color               : #3a012a;
+	background-color    : #cadcf4;
+}
+/*Hover para el Big Menu*/
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+	color               : #3a012a;
+	background-color    : #cadcf4; 
+	/*Bordes en hover bigmenu*/
+	/*	border-left         : 1px solid #3a012a ;  
+	border-right        : 1px solid #3a012a ;  */
+	-webkit-transition  : background-color 300ms ease-out;
+	-moz-transition     : background-color 300ms ease-out;
+}
+.glyphicon {
+	position               : relative;
+	top                    : 3px;
+	display                : inline-block;
+	font-family            : 'Glyphicons Halflings';
+	font-style             : normal;
+	font-weight            : normal;
+	line-height            : 1;
+	-webkit-font-smoothing : antialiased;
+}
+/*Transiciones para la info del usuario en el header*/
+.open > a:hover, .navbar-default .navbar-nav > .open > a:focus [class*="glyphicon-"] {
+    -webkit-transition-duration : .5s;
+    -moz-transition-duration    : .5s;
+    -o-transition-duration      : .5s;
+    transition-duration         : .5s;
+
+    -webkit-transition-property : -webkit-transform;
+    -moz-transition-property    : -moz-transform;
+    -o-transition-property      : -o-transform;
+    transition-property         : transform;	
+}
+.navbar-default .navbar-nav > .open > a:focus  [class*="glyphicon-"] {
+    -webkit-transform           :rotate(180deg);
+    -moz-transform              :rotate(180deg);
+}
+/*Transiciones para cada apartado del big menu*/
+.dropdown> a:focus  [class*="glyphicon-"] {
+    -webkit-transition-duration : .5s;
+    -moz-transition-duration    : .5s;
+    -o-transition-duration      : .5s;
+    transition-duration         : .5s;
+
+    -webkit-transition-property : -webkit-transform;
+    -moz-transition-property    : -moz-transform;
+    -o-transition-property      : -o-transform;
+    transition-property         : transform;	
+}
+.dropdown> a:focus  [class*="glyphicon-"] {
+    -webkit-transform           :rotate(180deg);
+    -moz-transform              :rotate(180deg);
+}
+
+/*Transiciones para caret*/
+default .navbar-nav > .dropdown > a .caret {
+	border-top-color    : #FFFFFF;
+	border-bottom-color : #FFFFFF;
+}
+.caret {
+	display        : inline-block;
+	width          : 0;
+	height         : 0;
+	margin-left    : 2px;
+	vertical-align : middle;
+	border-top     : 6px solid #000000;
+	border-right   : 6px solid transparent;
+	border-bottom  : 0 dotted;
+	border-left    : 6px solid transparent;
+	content        : "";
+}
+
+/*Transiciones para la info del usuario en el header*/
+.open > a:hover, .navbar-default .navbar-nav > .open > a:focus [class*="caret"] {
+    -webkit-transition-duration : .5s;
+    -moz-transition-duration    : .5s;
+    -o-transition-duration      : .5s;
+    transition-duration         : .5s;
+
+    -webkit-transition-property : -webkit-transform;
+    -moz-transition-property    : -moz-transform;
+    -o-transition-property      : -o-transform;
+    transition-property         : transform;	
+}
+.navbar-default .navbar-nav > .open > a:focus  [class*="caret"] {
+    -webkit-transform           :rotate(180deg);
+    -moz-transform              :rotate(180deg);
+}
+/*Transiciones para cada apartado del big menu*/
+.dropdown> a:focus  [class*="caret"] {
+    -webkit-transition-duration : .5s;
+    -moz-transition-duration    : .5s;
+    -o-transition-duration      : .5s;
+    transition-duration         : .5s;
+
+    -webkit-transition-property : -webkit-transform;
+    -moz-transition-property    : -moz-transform;
+    -o-transition-property      : -o-transform;
+    transition-property         : transform;	
+}
+.dropdown> a:focus  [class*="caret"] {
+    -webkit-transform           :rotate(180deg);
+    -moz-transform              :rotate(180deg);
+}
+
+
+
+/*----------------------------*/
+/*          Migajas           */
+/*----------------------------*/
+.breadcrumb {
+	background       : #e4e4e4;
+	margin-top       : 10px;
+}
+.breadcrumb .active {
+	font-weight      : bold;
+	color            : #000000;
+}
+.breadcrumb a {
+	color            : #000000;
+	text-decoration  : underline;
+}
+.breadcrumb a:hover {
+	color            : #4761fe;
+	text-decoration  : underline;
+} 
+
+
+
+/*----------------------------*/
+/*     Men���� de Hamburguesa    */
+/*----------------------------*/
+/*Bot����n Hamburguesa*/
+.titulo .btn:hover {
+	background       : #ffffff;
+	-webkit-transition: background-color 100ms ease-out;
+	-moz-transition: background-color 300ms ease-out;
+}
+.titulo .btn:active {
+	background       : #ffffff;
+	-webkit-transition: background-color 100ms ease-out;
+	-moz-transition: background-color 300ms ease-out;
+}
+.btn:active .fa-bars {
+	color            : #ea4747;
+}
+.fa-bars:hover, .fa-bars:active {
+	color            : #ea4747;
+	-webkit-transition: background-color 100ms ease-out;
+	-moz-transition: background-color 300ms ease-out;
+}
+.titulo .btn {
+	background       : #ea4747;
+}
+.activo {
+	color            : #000;
+	background-color : #fbff96;
+	text-shadow      : none;
+	padding-left     : 20px;
+}
+.inactivo {
+	padding-left     : 20px;
+}
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+	color             : #FFFFFF;		
+	background-color  : #ea4747;
+}
+.btn-group a {
+	text-decoration   : underline;
+}
+
+/*----------------------------*/
+/*        Boton Aceptar       */
+/*----------------------------*/
+.btn-lg {
+	color            : #333333;
+	background-color : #ebebeb;
+	border-color     : #adadad;
+}
+.btn-lg:hover {
+	color               : #333333;
+	background-color    : #ffffff;
+	border-color        : #adadad;
+	-webkit-transition  : background-color 300ms ease-out;
+	-moz-transition     : background-color 300ms ease-out;
+}
+
+
+/*----------------------------*/
+/*      Pie de Sistema        */
+/*----------------------------*/
+footer {
+	background       : #cccccc;
+}
+footer .logoINE {
+	width            : 161px;
+	padding-top      : 12px;
+	margin-bottom    : 5px;
+}
+footer p {
+	padding-top      : 12px;
+	/*margin-bottom    : 5px;*/
+}
+footer a {
+	/*margin-bottom    : 5px;*/
+	color            : #000000;
+	text-decoration  : underline;
+}
+footer .ayuda {
+
+	padding-right    : 15px;
+}
+footer .link:hover {
+	color: #000;
+	/*padding: 1px 5px;*/
+	text-decoration     : none;
+	font-weight         : bold;
+	background          : #FFFFFF;
+	-webkit-transition  : background-color 200ms ease-out;
+	-moz-transition     : background-color 200ms ease-out;	
+}
+
+
+
+/*--------------------------------------*/
+/*      Clases para cada Secci����n        */
+/*--------------------------------------*/
+form section {
+	border           : 1px solid #cccccc;
+    padding          : 20px 20px;
+    margin-bottom    : 26px;
+    background       : #ffffff;
+}
+form h3 {
+	background                      : #fbff96;
+	border                          : 1px solid #b89f7a;
+	padding                         : 10px 0px 10px 20px;
+	margin-bottom                   : -1px;
+	border-top-left-radius          : 10px;
+	border-top-right-radius         : 10px;
+	-webkit-border-top-right-radius : 10px;
+	-webkit-border-top-left-radius  : 10px;
+	-moz-border-top-right-radius    : 10px;
+	-moz-border-top-left-radius     : 10px;
+}
+
+/*--------------------------------------*/
+/*           Home por Sistema           */
+/*--------------------------------------*/
+section .ayuda {
+	border        : 1px solid #ccc;
+	border-radius : 10px;
+	margin-left   : 28%;
+	margin-right  : 24%;
+	margin-top    : 10%;
+	margin-bottom : 10%;
+}
+
+section .ayuda p{
+	text-align    : center;
+}
+
+section .ayuda .fa-lightbulb-o {
+	font-size     : 24px
+}
+/*--------------------------------------*/
+/*          Nuevo Perfil Usuario        */
+/*--------------------------------------*/
+.navbar-right {
+    margin-right  : -10px;
+}
+.barraDerecha {
+    padding-top   : 3px;
+}
+.dropdownInfo {
+    border-radius : none;
+}
+.dropdownInfo {
+    position      : absolute;
+    top           : 90%;
+    left          : 0;
+    z-index       : 1000;
+    display       : none;
+    float         : left;
+    min-width     : 160px;
+    /*padding       : 8px 0;*/
+    padding       : 26px 32px;
+    margin        : 2px 0 0;
+    font-size     : 14px;
+    list-style    : none;
+    background-color  : #ffffff;
+    border            : 1px solid #cccccc;
+    border            : 1px solid rgba(0, 0, 0, 0.15);
+    border-radius     : 0px;
+    -webkit-box-shadow : 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow         : 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip    : padding-box;
+}
+.navbar-right .dropdown-menu {
+    right       : auto;
+    left        : auto;
+}
+
+/* La información del usuario */
+.infoUsuario {
+    color       : #ebcc5d; /*Letras amarillas*/
+    background  : #0b56a6; /*Fondo azul*/
+    padding     : 6px 12px;
+    margin-right: -4px;
+}    
+.infoUsuario:hover .salir {
+    color       : #3a012a;
+    background  : red;
+    text-decoration     : none;
+    -webkit-transition  : background-color 200ms ease-out;
+    -moz-transition     : background-color 200ms ease-out;  
+}
+.infoUsuario:hover {
+    color       : #0b56a6; /*azul*/
+    background  : #ebcc5d; /*amarillas*/
+    text-decoration     : none;
+    -webkit-transition  : background-color 200ms ease-out;
+    -moz-transition     : background-color 200ms ease-out;  
+}        
+.infoUsuario:focus {
+    color       : #0b56a6; /*azul*/ 
+    background : #808000; /* Amarillo seleccionado */
+}
+
+.salir {
+    font-size  : 16px;
+    background-color : #ebcc5d;  /* amarillo */
+    padding          : 6px 12px;        
+    color            : #0b56a6; /*azul*/ 
+    border           : 1px solid #463a70;  
+}
+.salir:hover {
+    font-size        : 16px;
+    background-color : #990028; /* rojo quemado */
+    color            : #ffffff;
+    text-decoration  : none;
+    -webkit-transition  : background-color 200ms ease-out;
+    -moz-transition     : background-color 200ms ease-out;  
+}
+.paddingSesion {
+    padding-right    : 12px;
+}

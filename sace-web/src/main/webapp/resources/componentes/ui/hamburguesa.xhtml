@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://java.sun.com/jsf/composite">
+	
+
+	<cc:interface >
+		<cc:attribute name="accion" default="captura" shortDescription="Accion"/>
+		<cc:attribute name="capturaLink" default="#" shortDescription="Enlace a captura."/>
+ 		<cc:attribute name="consultaLink" default="#" shortDescription="Enlace a consulta." />
+		<cc:attribute name="modificaLink" shortDescription="Enlace a modifica." />
+		<cc:attribute name="eliminaLink" shortDescription="Enlace a elimina. También sirve cuando no se requiere una Action para ejecutar" />
+		<cc:attribute name="exportaLink" default="#" shortDescription="Enlace a exportar." />
+		<cc:attribute name="imprimeLink" default="#" shortDescription="Enlace a imprimir." />
+		<cc:attribute name="ayudaLink" default="#" shortDescription="Enlace a ayuda." />
+					
+		<cc:attribute name="modificaAction" method-signature="java.lang.String activaParaModificar()" 
+			shortDescription="La accion que se va a llamar para activar la opcion de modificar"/>
+			
+		<cc:attribute name="eliminaAction" method-signature="java.lang.String eliminaAction()"/>
+		<cc:attribute name="exportarExcelAction" method-signature="java.lang.String exportarExcel()"/>
+		<cc:attribute name="exportarPdfAction" method-signature="java.lang.String exportarPdf()"/>
+		<cc:attribute name="valorCombo" default="1"/>
+		<cc:attribute name="comparaCombo" default="-1"/>
+		<cc:attribute name="usrCaptura" default="1"/>
+		<cc:attribute name="listaResultado" default="1"/>
+		<cc:attribute name="comparaLstVacia" default="0"/>
+		<cc:attribute name="noElimina" default="0" shortDescription="Opcion para desactivar el link de elimina"/>
+		<cc:actionSource name="exportaAction" targets="btnExporta" />
+	</cc:interface>
+	
+	<cc:implementation>
+			<div class="btn-group col-md-1">
+				<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+					<i class="fa fa-bars fa-2x"></i>
+				</button>
+	
+				<ul class="dropdown-menu" role="menu">
+<!-- Opcion de CAPTURA -->
+					<c:if test="#{cc.attrs.accion eq 'captura' and cc.attrs.capturaLink eq '#'}">
+						<c:set var="liClassCap" value="text-muted activo"/>
+					</c:if>
+					<c:if test="#{cc.attrs.accion ne 'captura' and cc.attrs.capturaLink eq '#'}">
+						<c:set var="liClassCap" value="text-muted inactivo"/>
+					</c:if>
+					<li class="#{!empty liClassCap ? liClassCap : ''}">
+						<c:choose>
+							<c:when test="#{cc.attrs.capturaLink ne '#'}">
+								<a href="#{cc.attrs.capturaLink}">Capturar</a>
+							</c:when>
+							<c:otherwise>
+								Capturar
+							</c:otherwise>
+						</c:choose>				
+					</li>
+<!-- Opcion de CONSULTA -->
+					<c:if test="#{cc.attrs.accion eq 'consulta' and cc.attrs.consultaLink eq '#'}">
+						<c:set var="liClassCon" value="text-muted activo"/>
+					</c:if>
+					<c:if test="#{cc.attrs.accion ne 'consulta' and cc.attrs.consultaLink eq '#'}">
+						<c:set var="liClassCon" value="text-muted inactivo"/>
+					</c:if>
+					<li class="#{!empty liClassCon ? liClassCon : ''}">
+						<c:choose>
+							<c:when test="#{cc.attrs.consultaLink ne '#'}">
+								<a href="#{cc.attrs.consultaLink}">Consultar</a>
+							</c:when>
+							<c:otherwise>
+								Consultar
+							</c:otherwise>
+						</c:choose>				
+					</li>
+<!-- Opcion de MODIFICA -->					
+			<c:choose>
+				<c:when test="#{cc.attrs.modificaLink eq 'nolink'}">
+					<li class="text-muted inactivo">
+						Modificar
+					</li>
+				</c:when>
+				<c:otherwise>
+					<c:if test="#{cc.attrs.accion eq 'modifica' and cc.attrs.modificaLink eq '#'}">
+						<c:set var="liClassMod" value="text-muted activo" />
+					</c:if>
+					<c:if test="#{cc.attrs.accion eq 'captura' and cc.attrs.modificaLink eq '#'}">
+						<c:set var="liClassMod" value="text-muted inactivo" />
+					</c:if>
+<!-- 					<c:if test="#{cc.attrs.valorCombo ne cc.attrs.comparaCombo and cc.attrs.accion eq 'modifica'}"> -->
+<!-- 						<c:set var="liClassMod" value="text-muted activo"/> -->
+<!-- 					</c:if> -->
+<!-- 					<c:if test="#{cc.attrs.valorCombo ne cc. attrs.comparaCombo and cc.attrs.accion eq 'consulta'}"> -->
+<!-- 						<c:set var="liClassMod" value="text-muted inactivo"/> -->
+<!-- 					</c:if> -->
+					<c:if test="#{cc.attrs.accion eq 'reporte'}">
+						<c:set var="liClassMod" value="text-muted inactivo"/>
+					</c:if>
+					<li class="#{cc.attrs.accion eq 'consulta' ? '' : liClassMod}">
+<!-- 					<li class="#{cc.attrs.accion eq 'consulta' and (cc.attrs.valorCombo ne cc.attrs.comparaCombo) ? '' : liClassMod}"> -->
+						<c:choose>
+							<c:when test="#{cc.attrs.modificaLink eq '#'}">
+								<a href="#{cc.attrs.modificaLink}">Modificar</a>
+							</c:when>
+							<c:otherwise>
+								<c:choose>
+									<c:when test="#{cc.attrs.valorCombo ne cc.attrs.comparaCombo}">
+										<p:commandLink action="#{cc.attrs.modificaAction}" update="@form">
+											Modificar
+										</p:commandLink>
+							    	</c:when>
+							    	<c:otherwise>
+							    		Modificar
+							    	</c:otherwise>
+							    </c:choose>							
+							</c:otherwise>
+						</c:choose>
+					</li>
+			</c:otherwise>
+		</c:choose>
+					
+<!-- Opcion de ELIMINA -->
+			<c:choose>
+				<c:when test="#{cc.attrs.eliminaLink eq 'nolink'}">
+					<li class="text-muted inactivo">
+						Eliminar
+					</li>
+				</c:when>
+				<c:otherwise>
+					
+						<c:choose>
+							<c:when test="#{cc.attrs.accion eq 'captura'}">
+								<li class="#{cc.attrs.eliminaLink eq '#' ? 'text-muted activo' : (cc.attrs.valorCombo eq cc.attrs.comparaCombo ? 'text-muted activo' : '')}">
+									Eliminar
+								</li>
+							</c:when>
+							<c:when test="#{cc.attrs.eliminaLink eq 'anchor'}">
+							<li class="#{cc.attrs.eliminaLink eq '#' ? 'text-muted activo' : (cc.attrs.valorCombo eq cc.attrs.comparaCombo ? 'text-muted activo' : '')}">
+								<a href="#{cc.attrs.eliminaLink}">Eliminar</a>							
+							</li>
+							</c:when>
+							<c:otherwise>
+								<c:if test="#{cc.attrs.accion eq 'modifica' or cc.attrs.accion eq 'consulta'}">
+									<c:choose>
+										<c:when test="#{cc.attrs.eliminaLink eq 'action'}">
+										<li>
+											<p:commandLink  value="Eliminar" action="#{cc.attrs.eliminaAction}">
+												<p:confirm  header="" message="¿Está seguro que desea borrar el registro seleccionado?" icon="ui-icon-alert" />	
+											</p:commandLink>
+										</li>
+											<p:confirmDialog global="true" >
+									        	<p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-yes"/>
+									        	<p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" />    
+									    	</p:confirmDialog>
+									    	
+								    	</c:when>
+								    	<c:otherwise>
+								    	<li class="#{cc.attrs.eliminaLink eq '#' ? 'text-muted activo' : (cc.attrs.valorCombo eq cc.attrs.comparaCombo ? 'text-muted activo' : '')}">
+								    		Eliminar
+							    		</li>
+								    	</c:otherwise>
+								    </c:choose>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
+				</c:otherwise>
+			</c:choose>
+
+					<!-- EXPORTAR -->			
+					<li class="divider"></li>
+					
+					<li class="#{cc.attrs.exportaLink eq '#' ? 'text-muted inactivo' : (cc.attrs.comparaLstVacia eq cc.attrs.listaResultado ? 'text-muted inactivo':'')}">
+
+						<c:choose>
+						
+							<c:when test="#{cc.attrs.exportaLink ne '#' and (cc.attrs.comparaLstVacia ne cc.attrs.listaResultado)}">
+
+								<p:commandLink value="Exportar" type="button" onclick="PF('dlg2').show();"/>
+<!-- 								<a href="#{cc.attrs.exportaLink}">Exportar</a> -->
+
+							</c:when>
+							
+							<c:otherwise>Exportar</c:otherwise>
+
+						</c:choose>
+
+					</li>
+
+					<li class="#{cc.attrs.imprimeLink eq '#' ? 'text-muted inactivo' : (cc.attrs.comparaLstVacia eq cc.attrs.listaResultado ? 'text-muted inactivo':'')}">
+						<c:choose>
+							<c:when test="#{cc.attrs.imprimeLink ne '#' and (cc.attrs.comparaLstVacia ne cc.attrs.listaResultado)}">
+								<a href="#{cc.attrs.imprimeLink}">Imprimir</a>
+							</c:when>
+							<c:otherwise>
+								Imprimir
+							</c:otherwise>
+						</c:choose>				
+					</li>
+				</ul>
+			</div>
+<!-- 		</h:form> -->
+	</cc:implementation>
+</ui:component>
+

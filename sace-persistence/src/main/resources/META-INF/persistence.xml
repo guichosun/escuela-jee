@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://java.sun.com/xml/ns/persistence
+        http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+	<!-- Configuracion para la unidad de persistencia -->
+	<persistence-unit name="sacePU" transaction-type="JTA">
+		<jta-data-source>java:jboss/datasources/SACE_DS</jta-data-source>
+		<properties>
+			<!-- Propiedades para Hibernate -->
+			<!-- <property name="hibernate.hbm2ddl.auto" value="validate" /> -->
+			<property name="hibernate.show_sql" value="true" />
+<!-- 			<property name="jboss.entity.manager.factory.jndi.name" -->
+<!-- 				value="java:/MyEntityManagerFactory" /> -->
+			<property name="hibernate.transaction.factory_class"
+				value="org.hibernate.transaction.CMTTransactionFactory" />
+			<property name="hibernate.transaction.manager_lookup_class"
+				value="org.hibernate.transaction.JBossTransactionManagerLookup" />
+			<property name="hibernate.connection.autocommit" value="false" />
+			<property name="hibernate.current_session_context_class"
+				value="jta" />
+			<!-- para realizar los mapeos con eclipse. Comentarlas cuando no -->
+			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"></property>
+			<property name="hibernate.connection.password" value="pakalpakal"></property>
+			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/SACE_DB?profileSQL=true&amp;tinyInt1isBit=false"></property>
+			<property name="hibernate.connection.username" value="sace"></property>
+
+<!-- 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"></property> -->
+		</properties>
+	</persistence-unit>
+
+</persistence>

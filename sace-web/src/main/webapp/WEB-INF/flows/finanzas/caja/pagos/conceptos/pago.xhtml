@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sf="http://www.springframework.org/tags/faces"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+	<h3>#{msgFNZ.pago_de_concepto}</h3>
+	<section>
+	<div class="row">
+		<c:choose>
+			<c:when test="#{mbRegistro.form.accionModulo eq 'CAPTURA'}">
+				<div class="col-md-5">
+					<div class="row">
+						<div class="col-md-11 form-group">
+							<label>#{msgFNZ.fecha_pago_}</label>
+							<h:inputText value="#{mbRegistro.form.registroPago.fechaPago}" readonly="true"
+								styleClass="form-control" >
+								<f:convertDateTime dateStyle="long" type="date" locale="es_MX"/>
+							</h:inputText> 
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-11 form-group">
+							<span class="obligatorio">*</span><label>#{msgFNZ.concepto_}</label>
+							<h:selectOneMenu id="ocupacionTut" styleClass="form-control" 
+								required="true"
+								requiredMessage="#{msg_generales.msg_dato_requerido}"
+								value="#{mbRegistro.form.idTramite}"
+								readonly="#{mbRegistro.form.modoLectura}">
+			
+								<f:selectItem itemDisabled="true" 
+									noSelectionOption="true" 
+									itemLabel="#{msg_generales.lbl_selecciona}" 
+									itemValue="#{null}" />
+									
+								<f:selectItems value="#{mbRegistro.traeConceptos()}" 
+									var="objeto"
+								    itemLabel="#{objeto.descripcion}"
+								    itemValue="#{objeto.idTramite}"/>
+								    
+								<p:ajax event="change" 
+									update="valorC msgSinPrecio #{btnGuardar.id}"
+									process="@this"
+									listener="#{mbRegistro.traeValorConcepto()}"
+									onstart="PF('blockUI').block()"
+									oncomplete="PF('blockUI').unblock()" />
+								
+							</h:selectOneMenu>
+							<p:message id="messageOcuTut" for="ocupacionTut" display="text" /> 
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-11 form-group">
+							<label>#{msgFNZ.monto_}</label> 
+							<h:inputText id="valorC" value="#{mbRegistro.form.registroPago.valor}" 
+								readonly="true"
+								styleClass="form-control" />
+							<p:messages id="msgSinPrecio" for="msgSinPrecio" autoUpdate="true"/>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-7">
+					<div class="row">
+						<div class="col-md-11 form-group">
+							<span class="obligatorio">*</span><label>Tipo de pago:</label>
+					        <p:selectOneRadio id="tipos" value="#{mbRegistro.form.registroPago.tipoPago}"
+					        	required="true" requiredMessage="#{msg_generales.msg_requerido}" >
+					            
+					            <f:selectItem itemLabel="#{msgFNZ.efectivo}&nbsp;&nbsp;" itemValue="1" />
+					            <f:selectItem itemLabel="#{msgFNZ.terminal}&nbsp;&nbsp;" itemValue="2" />
+					            <f:selectItem itemLabel="#{msgFNZ.deposito}&nbsp;&nbsp;" itemValue="3" />
+					            <f:selectItem itemLabel="#{msgFNZ.terminal}" itemValue="4" />
+					        </p:selectOneRadio>
+					        <p:message id="messageTipos" for="tipos" display="text"
+								autoUpdate="true" />
+						</div>
+						<div class="col-md-11 form-group">
+							<label>Observaciones:</label>
+							<p:inputTextarea id="descripcion" value="#{mbRegistro.form.registroPago.observaciones}" 
+								autoResize="false" styleClass="form-control"
+								maxlength="300" rows="4"
+								counter="contadorDescripcion" counterTemplate="#{msg_generales.lbl_display_counts}"
+								readonly="#{mbRegistro.form.modoLectura}">
+							
+								<f:converter converterId="limpiaCaracteresEspeciales" />
+								<p:ajax event="blur" update="messageDesc" />
+											
+							</p:inputTextarea>
+							<p:message id="messageDesc" for="descripcion" display="text"
+								autoUpdate="true" />
+							<p:outputLabel id="contadorDescripcion"
+								styleClass="help-block text-right" />
+						</div>
+					</div>
+
+				</div>
+			</c:when>
+			<c:otherwise>
+				<p class="help-block">Para editar el pago utilice el men&uacute; de acciones para habilitar la edici&oacute;n.</p>
+				
+				TODO: Desarrollar una datatable para visualizar todos los pagos realizados por la ficha academica
+				
+				<p:dataTable id="dtTramites" value="#{mbRegistro.form.carreraSeleccionada.tramites}" var="tramiteCarrera"
+					rendered="#{!empty mbRegistro.form.carreraSeleccionada}"
+					selectionMode="single">
+					<f:facet name="header">
+						<h:outputText value="Pagos realizados por la ficha academica #{mbRegistro.form.dominio.matricula}" /> 
+					</f:facet>
+					
+					<p:column headerText="Fecha Pago">
+						<h:outputText value="#{tramiteCarrera.tramite.descripcion}" />
+					</p:column>
+					
+					<p:column headerText="Concepto">
+						<h:outputText value="#{tramiteCarrera.cuota}" />
+					</p:column>
+					
+					<p:column headerText="Valor">
+						<h:outputText value="#{tramiteCarrera.cuota}" />
+					</p:column>
+					
+					<p:column headerText="Observaciones">
+						<h:outputText value="#{tramiteCarrera.cuota}" />
+					</p:column>
+				</p:dataTable>
+			</c:otherwise>
+		</c:choose>
+	</div>
+	</section>
+
+</ui:component>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+	<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:c ="http://java.sun.com/jsp/jstl/core"
+	  xmlns:p="http://primefaces.org/ui"	  
+	  xmlns:ine="http://www.ine.mx/custom/tags"
+	  xmlns:sec="http://www.springframework.org/security/tags">
+		
+		<!--  INICIO HEADER  -->	
+		<header  class="encabezado">
+			<div class="fondoEncabezado navbar navbar-default navbar-static-top" role="navigation">
+				<div class="container">
+					<div class="navbar-header">                    
+						<h:graphicImage class="img-responsive" library="img" name="pendon4.png" style="z-index: 0"/>
+						<a href="${request.contextPath}/app/home">
+						<h:graphicImage class="centerImg" library="img" name="pakal_pendon2.png" style="z-index: 1" />
+						</a>
+					</div>
+					<div class="navbar-right barraDerecha">                                                                                                       
+                        <a href="#" data-toggle="dropdown" class="infoUsuario dropdown-toggle">
+                        	<i class="fa fa-user"></i> ¡Hola #{SPRING_SECURITY_CONTEXT.authentication.principal.username}! <i class="fa fa-caret-down"></i>
+                        </a>
+                        <div class="dropdown-menu dropdownInfo">
+                            <div>
+                                <div class="col-md-12">                        
+                                    <p>
+<!--                                         <label>#{SPRING_SECURITY_CONTEXT.authentication.principal.nombreFuncionario}</label> -->
+                                    </p>
+                                    <p>
+<!--                                         <label>#{SPRING_SECURITY_CONTEXT.authentication.principal.ubicacionOficina}</label> -->
+                                    </p>                        
+                                </div>
+                            </div>                
+                        </div> 
+                        <a class="salir" href="#{request.contextPath}/j_spring_security_logout">Cerrar Sesión <i class="fa fa-sign-out paddingSesion"></i> </a>                         
+                    </div>
+					
+					
+					
+				</div>
+			</div>
+			<div class="container">
+				<div class="col-md-3 col-xs-3">
+					
+				</div>
+				<div class="col-md-7 col-xs-7">
+					<h3>Sistema de Administracion y Control Escolar</h3>
+                </div>
+                <div class="col-md-2 col-xs-2">
+                </div>
+            </div>
+		</header>
+		
+<!--  FIN HEADER   -->               
+</ui:component>

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<facelet-taglib xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd"
+version="2.0">
+	<namespace>http://www.qr.mx/custom/tags</namespace>
+	<tag>
+		<description>
+			Tag para pintar el menu dinamicamente apartir de un perfil de usuario
+		</description>
+		<tag-name>menuPrincipal</tag-name>
+		<component>
+			<component-type>menuPrincipal</component-type>
+			<renderer-type>mx.ine.menu.Principal</renderer-type>
+		</component>
+		<attribute>
+			<description>La lista de las opciones que conforman el menu principal</description>
+			<name>opciones</name>
+		    <required>true</required>
+		    <type>java.util.List</type>
+		</attribute>
+		<attribute>
+			<description>True para pintar la opcion Home</description>
+			<name>renderHome</name>
+		    <required>false</required>
+		    <type>java.lang.String</type>
+		</attribute>
+	</tag>
+		<tag>
+		<description>
+			Pinta un Big Menu. Las pestañas, etapas y modulos de cada etapa son tomadas de la BD
+		</description>
+		<tag-name>bigMenu</tag-name>
+		<component>
+			<component-type>mx.ine.component.BigMenu</component-type>
+			<renderer-type>mx.ine.component.menu.BigMenuRenderer</renderer-type>
+		</component>
+		<attribute>
+			<description>
+				Una intancia del modelo del menu (BigMenu) para crear el menu programaticamente
+			</description>
+			<name>modelo</name>
+		    <required>true</required>
+		    <type>mx.qr.core.ui.ModeloBigMenu</type>
+		</attribute>
+		<attribute>
+			<description>True para pintar la opcion Home</description>
+			<name>renderHome</name>
+		    <required>false</required>
+		    <type>java.lang.Boolean</type>
+		</attribute>
+	</tag>		
+</facelet-taglib>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<type-mapping>
+		<sql-type jdbc-type="OTHER" hibernate-type='date' />
+		<sql-type jdbc-type="NUMERIC" hibernate-type="integer" />
+		<sql-type jdbc-type="VARCHAR" hibernate-type="string" />
+		<sql-type jdbc-type="CHAR" hibernate-type="string" />
+		<sql-type jdbc-type="DATE" hibernate-type="date" />
+	</type-mapping>
+	<table-filter match-name="carreras"
+		match-catalog="SACE_DB">
+	</table-filter>	
+	<table-filter match-name="ciclos_escolares"
+		match-catalog="SACE_DB">
+	</table-filter>
+	<table-filter match-name="periodos_escolares"
+		match-catalog="SACE_DB">
+	</table-filter>
+	<table catalog="SACE_DB" name="carreras" class="mx.qr.sace.persistencia.Carrera"/>
+	<table catalog="SACE_DB" name="ciclos_escoares" class="mx.qr.sace.persistencia.CicloEscolar"/>
+	<table catalog="SACE_DB" name="periodos" class="mx.qr.sace.persistencia.PeriodoEscolar"/>
+</hibernate-reverse-engineering>

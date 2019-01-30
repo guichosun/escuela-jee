@@ -1,0 +1,141 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<!-- Este pom construye el artifact EAR e incluye los modulos de la aplicacion 
+		(ejb y war). -->
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>mx.qr.escolar</groupId>
+		<artifactId>sace-parent</artifactId>
+		<version>0.7-BETA</version>
+	</parent>
+
+	<artifactId>sace-ear</artifactId>
+	<packaging>ear</packaging>
+
+	<name>El EAR de SACE</name>
+	<description>El paquete que va a contener toda la aplicacion</description>
+
+	<properties>
+		<sace-web.version>${project.version}</sace-web.version>
+	</properties>
+	
+	<dependencies>
+
+		<!-- Define Log4j dependency and its version -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		
+		<!-- JASPERREPORTS -->	
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.2.0</version>
+		</dependency>
+
+		<!-- Dependencies on the ejb and web modules so that they can be found 
+			by the ear plugin -->
+		<dependency>
+			<groupId>mx.qr.escolar</groupId>
+			<artifactId>sace-web</artifactId>
+			<version>${sace-web.version}</version>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>mx.qr.escolar</groupId>
+			<artifactId>sace-marketing-ejb</artifactId>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>mx.qr.escolar</groupId>
+			<artifactId>sace-controlacademico-ejb</artifactId>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>mx.qr.escolar</groupId>
+			<artifactId>sace-controlescolar-ejb</artifactId>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>mx.qr.escolar</groupId>
+			<artifactId>sace-finanzas-ejb</artifactId>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>mx.qr.apis</groupId>
+			<artifactId>core-api</artifactId>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>mx.qr.escolar</groupId>
+			<artifactId>sace-core-api</artifactId>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>mx.qr.escolar</groupId>
+			<artifactId>sace-persistence</artifactId>
+			<type>jar</type>
+		</dependency>
+		<!-- Import the LOG4J , we use provided scope as the API is included in 
+			JBoss EAP 6. Dependency in explicitly defined in jboss-deployment-structure.xml -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+<!-- 		<finalName>sace-parent</finalName> -->
+		<plugins>
+			<!-- Ear plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>${version.ear.plugin}</version>
+				<!-- configuring the ear plugin -->
+				<configuration>
+					<!-- Tell Maven we are using Java EE 6 -->
+					<version>6</version>
+					<!-- Use Java EE ear libraries as needed. Java EE ear libraries are 
+						in easy way to package any libraries needed in the ear, and automatically 
+						have any modules (EJB-JARs and WARs) use them -->
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
+					<modules>
+<!-- 						<jarModule> -->
+							<!-- JASPERREPORTS -->	
+<!-- 							<groupId>net.sf.jasperreports</groupId> -->
+<!-- 							<artifactId>jasperreports</artifactId> -->
+<!-- 							<includeInApplicationXml>true</includeInApplicationXml> -->
+<!-- 						</jarModule> -->
+						<!-- Default context root of the web app is /jboss-ejb-in-ear-web. 
+							If a custom context root is needed, uncomment the following snippet to register 
+							our War as a web module and set the contextRoot property -->
+						<webModule>
+							<groupId>mx.qr.escolar</groupId>
+							<artifactId>sace-web</artifactId>
+							<contextRoot>/sace</contextRoot>
+						</webModule>
+					</modules>
+					<fileNameMapping>no-version</fileNameMapping>
+				</configuration>
+			</plugin>
+
+			<!-- JBoss AS plugin to deploy ear -->
+			<plugin>
+				<groupId>org.jboss.as.plugins</groupId>
+				<artifactId>jboss-as-maven-plugin</artifactId>
+				<version>${version.jboss.maven.plugin}</version>
+				<configuration>
+					<skip>false</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

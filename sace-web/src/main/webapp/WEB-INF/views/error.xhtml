@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"	
+	xmlns:sf="http://www.springframework.org/tags/faces" lang="es-MX"
+	xml:lang="es-MX">
+
+<f:view contentType="text/html" encoding="UTF-8" locale="es_MX">
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title><h:outputText value="#{msg_generales.titulo_sistema}" /></title>
+		<h:outputScript library="js" name="primeFacesLocales.js" />
+		<ui:insert name="headIncludes" />
+		<h:outputStylesheet library="css" name="bootstrap.css" />
+		<h:outputStylesheet library="css" name="sistemas.css" />
+		<h:outputStylesheet library="css" name="estilos.css" />
+		<h:outputStylesheet library="css" name="font-awesome.css" />
+	</h:head>
+	<h:body>
+				<!--  INICIO HEADER  -->	
+		<header  class="encabezado">
+			<div class="fondoEncabezado navbar navbar-default navbar-static-top" role="navigation">
+				<div class="container">
+					<div class="navbar-header">                    
+						<h:graphicImage class="img-responsive" library="img" name="pendon4.png" style="z-index: 0"/>
+						<a href="${request.contextPath}/app/home">
+						<h:graphicImage class="centerImg" library="img" name="pakal_pendon2.png" style="z-index: 1" />
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="col-md-3 col-xs-3">
+					
+				</div>
+				<div class="col-md-7 col-xs-7">
+					<h3>#{msg_generales.nombre_sistema}</h3>
+                </div>
+            </div>
+		</header>
+		
+
+
+	<h:form>
+		<br>
+		</br>
+	<div class="container">	
+		<section>
+			<div class="row">
+				<div class="col-md-5 col-md-offset-3">
+						<p class="Titulo_delSistema"> 
+							<c:choose>
+								<c:when test="#{requestScope['javax.servlet.error.status_code']==null}">
+									<!--Se encontr&oacute; un problema durante la ejecuci&oacute;n del sistema:<br/><br/> -->
+									 Sucedi&oacute; un problema en el sistema, por favor inténtalo de nuevo. <br />
+									Para regresar a la pantalla de inicio presiona el logotipo del sistema.
+								</c:when>
+								<c:when test="#{requestScope['javax.servlet.error.status_code']==401}">
+									<!--Usted no cerr&oacute; adecuadamente su sesi&oacute;n la &uacute;ltima vez que accedi&oacute; al sistema y debe esperar 20 minutos, o tiene abierta otra sesi&oacute;n en otro navegador.-->
+									Has cerrado incorrectamente tu sesi&oacute;n o tienes abierta otra. Espera 20 minutos para intentarlo de nuevo.
+								</c:when>
+								<c:when test="#{requestScope['javax.servlet.error.status_code']==403}">
+									<!--Acceso denegado.-->
+									Acceso denegado: no cuentas con permisos.
+								</c:when>
+								<c:when test="#{requestScope['javax.servlet.error.request_uri'].toString().contains('moduloCerrado')}">
+									<!--  El módulo se encuentra cerrado.-->
+									Módulo cerrado, comunícate con el área responsable del sistema. <br/>
+									Para regresar a la pantalla de inicio presiona el logotipo del sistema.	
+								</c:when>	
+								<c:when test="#{requestScope['javax.servlet.error.status_code']==404}">
+									<!--El recurso requerido no est&aacute; disponible.<br/>-->
+									<!-- #{requestScope['javax.servlet.error.request_uri']} -->
+									El recurso requerido no est&aacute; disponible.<br />
+									Para regresar a la pantalla de inicio presiona el logotipo del sistema.
+								</c:when>
+								<c:when test="#{requestScope['javax.servlet.error.exception'].toString().contains('BadlyFormattedFlowExecutionKeyException')}">
+									<!--Por favor no  manipule manualmente la URL, navegue sólo a través del sistema.-->
+									¡Dirección inv&aacute;lida! Por favor no manipule la URL.<br />
+									Para regresar a la pantalla de inicio presiona el logotipo del sistema.
+								</c:when>
+								<c:when test="#{requestScope['javax.servlet.error.exception'].toString().contains('FlowExecutionRestorationFailureException')}">
+									<!--Por favor no  manipule manualmente la URL, navegue sólo a través del sistema.-->
+									¡Direcci&oacute;n inv&aacute;lida! Por favor no manipule la URL.<br />
+									Para regresar a la pantalla de inicio presiona el logotipo del sistema.
+								</c:when>
+								<c:when test="#{requestScope['javax.servlet.error.status_code']==500}">
+									<!--Se gener&oacute; una solicitud no v&aacute;lida en el sistema: -->
+									<!-- #{requestScope['javax.servlet.error.message']}<br/><br/> -->
+									<!-- #{requestScope['javax.servlet.error.exception']} -->
+									Sucedió una interrupción en la información.<br />
+									Para regresar a la pantalla de inicio presiona el logotipo del sistema.
+								</c:when>						
+							</c:choose>
+						</p>
+					</div>
+				</div>
+			</section>
+		</div>
+		</h:form>
+
+
+		<!--   INICIO FOOTER   -->
+		<footer>
+			<div class="container">
+				<div class="col-md-3">
+					<h:graphicImage library="img" name="SACE.png" />
+				</div>
+				<div class="col-md-6">
+					<p>
+						SACE V1.0 | Compatibilidad Óptima con Google Chrome
+					</p>
+				</div>
+			</div>
+		</footer>
+	</h:body>
+</f:view>
+</html>

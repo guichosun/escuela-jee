@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:cc="http://java.sun.com/jsf/composite">
+	
+
+	<cc:interface >
+		<cc:attribute name="escolaridad" type="mx.qr.sace.persistencia.entidades.Escolaridad" shortDescription="La instancia de la escolaridad"/>
+		<cc:attribute name="modalidad" type="mx.qr.sace.persistencia.entidades.Modalidad" shortDescription="La instancia de la Modalidad"/>
+		<cc:attribute name="capturaLink" default="#" shortDescription="Enlace a captura."/>
+					
+		<cc:attribute name="modificaAction" method-signature="java.lang.String activaParaModificar()" 
+			shortDescription="La accion que se va a llamar para activar la opcion de modificar"/>
+			
+		<cc:attribute name="refrescaEscolaridad" method-signature="void refrescaEscolaridad()" />
+		<cc:attribute name="refrescaModalidad" method-signature="void refrescaModalidad()" />
+		<cc:actionSource name="actionModalidad" targets="modalidad"/>
+<!-- 		<cc:actionSource name="exportaAction" targets="btnExporta" /> -->
+	</cc:interface>
+	
+	<cc:implementation>
+		<pe:blockUI target="#{theForm.id}" widgetVar="blockUI" >
+				<h:graphicImage library="img" name="loader.gif" width="70" />
+		</pe:blockUI>
+	
+			<div class="row form-group">
+				<div class="col-md-6">
+					<p:selectOneRadio id="escolaridad" required="true" styleClass=""
+						requiredMessage="#{msg_generales.msg_dato_requerido}"
+						value="#{cc.attrs.escolaridad.idEscolaridad}" 
+						valueChangeListener="#{cc.attrs.refrescaEscolaridad}">
+			            
+			            
+			            <f:selectItem itemLabel="Bachillerato" itemValue="1" />
+			            <f:selectItem itemLabel="Licenciatura" itemValue="2" />
+			            <f:selectItem itemLabel="Maestría" itemValue="3" />
+            
+						<p:ajax event="change"
+							update="@form"
+							onstart="PF('blockUI').block()"
+							oncomplete="PF('blockUI').unblock()"/>
+
+			        </p:selectOneRadio>
+			        <p:message id="messageEsc" for="escolaridad" display="text" />
+				</div>
+				<div class="col-md-6">
+					<p:selectOneRadio id="modalidad" required="true" styleClass=""
+						requiredMessage="#{msg_generales.msg_dato_requerido}" 
+						value="#{cc.attrs.modalidad.idModalidad}" 
+						valueChangeListener="#{cc.attrs.refrescaModalidad}">
+						
+			            <f:selectItem itemLabel="Escolarizado" itemValue="1" />
+			            <f:selectItem itemLabel="Ejecutivo" itemValue="2" />
+			            <f:selectItem itemLabel="Linea" itemValue="3" />
+			            
+				            <p:ajax update="@form" 
+								 event="change"  
+								 onstart="PF('blockUI').block()"
+								 oncomplete="PF('blockUI').unblock()"/>
+	
+			            
+			        </p:selectOneRadio>
+			        <p:message id="messageMod" for="modalidad" display="text" />
+				</div>
+			</div>	
+
+	</cc:implementation>
+</ui:component>
+

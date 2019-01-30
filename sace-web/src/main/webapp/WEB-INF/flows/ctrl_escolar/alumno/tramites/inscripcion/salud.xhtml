@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sf="http://www.springframework.org/tags/faces"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+	<h3>#{messageSource['lbl_salud']}</h3>
+	<section>
+	<div class="row">
+<!-- 	Se divide la seccion en dos columnas principales de a 6 -->
+		<div class="col-md-6"> <!-- PRIMERA COLUMNA -->
+<!-- 			ESTA COLUMNA TENDRA UN ROW DIVIDIDO EN DOS COL DEL 6 -->
+			<div class="row">
+				<div class="col-md-6 form-group">
+					<span class="obligatorio">*</span>
+						<h:outputLabel value="#{msg_generales.toma_medicamento}" 
+							for="res1"/>
+				</div>
+				<div class="col-md-6 form-group">
+					<p:selectOneRadio id="res1" 
+						value="#{mbRegistro.form.fichaAcademica.datoSalud.tomaMedicamento}" 
+						required="true" 
+						requiredMessage="#{msg_generales.msg_dato_requerido}"
+						disabled="#{mbRegistro.form.modoLectura}">
+			
+						<p:ajax update="formaTomar"/>
+						<f:selectItems value="#{mbRegistro.form.respuestas}"/>						
+			            
+				    </p:selectOneRadio>
+				</div>
+<!-- 	+++++++++++ -->				
+				<div class="col-md-5 col-md-offset-1 form-group">
+					<h:outputLabel value="#{msg_generales.forma_tomarlo}" 
+							for="formaTomar"/>
+				</div>
+				<div class="col-md-6 form-group">
+					<p:inputText id="formaTomar" styleClass="form-control"
+						required="#{mbRegistro.form.fichaAcademica.datoSalud.tomaMedicamento}"
+						readonly="#{!mbRegistro.form.fichaAcademica.datoSalud.tomaMedicamento}" 
+						maxlength="50"  
+						value="#{mbRegistro.form.fichaAcademica.datoSalud.cualMedicamento}"
+						requiredMessage="#{msg_generales.msg_dato_requerido}">
+						
+						<f:converter converterId="limpiaCaracteresEspeciales"/>
+						<p:ajax event="blur" update="msgFormaTomar"/>
+						
+					</p:inputText>
+					<p:message id="msgFormaTomar" for="formaTomar" 
+						display="text"/>
+				</div>
+<!-- 	+++++++++++ -->
+				<div class="col-md-6 form-group">
+					<span class="obligatorio">*</span> 
+					<h:outputLabel value="#{msg_generales.padece_alergia}" 
+								for="res2"/>
+				</div>
+				<div class="col-md-6 form-group">
+					<p:selectOneRadio id="res2" 
+						value="#{mbRegistro.form.fichaAcademica.datoSalud.padeceAlergia}" 
+						required="true" 
+						requiredMessage="#{msg_generales.msg_dato_requerido}"
+						disabled="#{mbRegistro.form.modoLectura}">
+			
+						<p:ajax update="tratamiento"/>
+						<f:selectItems value="#{mbRegistro.form.respuestas}"/>						
+			            
+				    </p:selectOneRadio>
+				</div>
+<!-- 	+++++++++++ -->				
+				<div class="col-md-5 col-md-offset-1 form-group">
+					<h:outputLabel value="#{msg_generales.cual_tratamiento}" 
+								for="tratamiento"/>
+				</div>
+				<div class="col-md-6 form-group">
+					<p:inputText id="tratamiento" styleClass="form-control"
+						required="#{mbRegistro.form.fichaAcademica.datoSalud.padeceAlergia}"
+						readonly="#{!mbRegistro.form.fichaAcademica.datoSalud.padeceAlergia}"
+						maxlength="50"  
+						value="#{mbRegistro.form.fichaAcademica.datoSalud.tratamientoAlergia}"
+						requiredMessage="#{msg_generales.msg_dato_requerido}">
+						
+						<f:converter converterId="limpiaCaracteresEspeciales"/>
+						<p:ajax event="blur" update="msgTratamiento"/>
+						
+					</p:inputText>
+					<p:message id="msgTratamiento" for="tratamiento" 
+						display="text"/>
+				</div>
+<!-- 	+++++++++++ -->				
+				<div class="col-md-6 form-group">
+					<h:outputLabel value="#{msg_generales.emergencia_llamar}" 
+								for="emergencia"/>
+				</div>
+				<div class="col-md-6 form-group">
+					<p:inputText id="emergencia" styleClass="form-control"
+						maxlength="50"  
+						value="#{mbRegistro.form.fichaAcademica.datoSalud.telefonoEmergencia}"
+						readonly="#{mbRegistro.form.modoLectura}"
+						requiredMessage="#{msg_generales.msg_dato_requerido}">
+						
+						<f:converter converterId="limpiaCaracteresEspeciales"/>
+						<p:ajax event="blur" update="msgemergencia"/>
+						
+					</p:inputText>
+					<p:message id="msgemergencia" for="emergencia" 
+						display="text"/>
+				</div>	
+<!-- 	+++++++++++ -->				
+				<div class="col-md-5 col-md-offset-1 form-group">
+					<h:outputLabel value="#{msg_generales.con}" 
+								for="con"/>
+				</div>
+				<div class="col-md-6 form-group">
+					<p:inputText id="con" styleClass="form-control"
+						maxlength="50"  
+						value="#{mbRegistro.form.fichaAcademica.datoSalud.contactoEmergencia}"
+						readonly="#{mbRegistro.form.modoLectura}"
+						requiredMessage="#{msg_generales.msg_dato_requerido}">
+						
+						<f:converter converterId="limpiaCaracteresEspeciales"/>
+						<p:ajax event="blur" update="msgCon"/>
+						
+					</p:inputText>
+					<p:message id="msgCon" for="con" 
+						display="text"/>
+				</div>
+<!-- 	+++++++++++ -->							
+				<div class="col-md-5 col-md-offset-1 form-group">
+					<h:outputLabel value="#{msg_generales.parentesco}" 
+								for="parentesco"/>
+				</div>
+				<div class="col-md-6 form-group">
+					<p:inputText id="parentesco" styleClass="form-control"
+						maxlength="50"  
+						value="#{mbRegistro.form.fichaAcademica.datoSalud.parentesco}"
+						readonly="#{mbRegistro.form.modoLectura}"
+						requiredMessage="#{msg_generales.msg_dato_requerido}">
+						
+						<f:converter converterId="limpiaCaracteresEspeciales"/>
+						<p:ajax event="blur" update="msgPare"/>
+						
+					</p:inputText>
+					<p:message id="msgPare" for="parentesco" 
+						display="text"/>
+				</div>
+<!-- 	+++++++++++ -->							
+			</div>
+			
+		</div>
+		<div class="col-md-6"> <!-- SEGUNDA COLUMNA -->
+			<div class="row">
+				<div class="col-md-6 form-group">
+					<span class="obligatorio">*</span> 
+					<h:outputLabel value="#{msg_generales.padece_enfermedad}" 
+								for="res3"/>
+				</div>
+				<div class="col-md-6 form-group">
+					<p:selectOneRadio id="res3" 
+						value="#{mbRegistro.form.fichaAcademica.datoSalud.padeceEnfermedad}" 
+						required="true" 
+						requiredMessage="#{msg_generales.msg_dato_requerido}"
+						disabled="#{mbRegistro.form.modoLectura}">
+			
+						<p:ajax update="tratamientoUsas"/>
+						<f:selectItems value="#{mbRegistro.form.respuestas}"/>						
+			            
+				    </p:selectOneRadio>
+				</div>
+<!-- 	+++++++++++ -->				
+				<div class="col-md-6  form-group">
+					<h:outputLabel value="#{msg_generales.tratamiento_usa}" 
+								for="tratamientoUsas"/>
+				</div>
+				<div class="col-md-6 form-group">
+					<p:inputText id="tratamientoUsas" styleClass="form-control"
+						required="#{mbRegistro.form.fichaAcademica.datoSalud.padeceEnfermedad}"
+						readonly="#{!mbRegistro.form.fichaAcademica.datoSalud.padeceEnfermedad}" 
+						maxlength="50"  
+						value="#{mbRegistro.form.fichaAcademica.datoSalud.cualEnfermedad}"
+						requiredMessage="#{msg_generales.msg_dato_requerido}">
+						
+						<f:converter converterId="limpiaCaracteresEspeciales"/>
+						<p:ajax event="blur" update="msgtratamientoUsas"/>
+						
+					</p:inputText>
+					<p:message id="msgtratamientoUsas" for="tratamientoUsas" 
+						display="text"/>
+				</div>
+<!-- 	+++++++++++ -->				
+				<div class="col-md-6 form-group">
+					<span class="obligatorio">*</span> 
+					<h:outputLabel value="#{msg_generales.puede_donar_sangre}" 
+								for="res4"/>
+				</div>
+				<div class="col-md-6 form-group">
+					<p:selectOneRadio id="res4" 
+						value="#{mbRegistro.form.fichaAcademica.datoSalud.puedeDonar}" 
+						required="true" 
+						requiredMessage="#{msg_generales.msg_dato_requerido}"
+						disabled="#{mbRegistro.form.modoLectura}">
+						
+						<p:ajax update="tiposangre"></p:ajax>
+						<f:selectItems value="#{mbRegistro.form.respuestas}"/>						
+			            
+				    </p:selectOneRadio>
+				</div>
+<!-- 	+++++++++++ -->				
+				<div class="col-md-6 form-group">
+					<h:outputLabel value="#{msg_generales.tipo_sangre}" 
+								for="tiposangre"/>
+				</div>
+				<div class="col-md-6 form-group">
+					<p:inputText id="tiposangre" styleClass="form-control"
+						maxlength="50"  
+						value="#{mbRegistro.form.fichaAcademica.datoSalud.tipoSangre}"
+						requiredMessage="#{msg_generales.msg_dato_requerido}"
+						readonly="#{mbRegistro.form.modoLectura}">
+						
+						<f:converter converterId="limpiaCaracteresEspeciales"/>
+						<p:ajax event="blur" update="msgtiposangre"/>
+						
+					</p:inputText>
+					<p:message id="msgtiposangre" for="tiposangre" 
+						display="text"/>
+				</div>
+<!-- 	+++++++++++ -->
+				<div class="col-md-6 form-group">
+					<span class="obligatorio">*</span> 
+					<h:outputLabel value="#{msg_generales.tiene_seguro}" 
+								for="res5"/>
+				</div>
+				<div class="col-md-6 form-group">
+					<p:selectOneRadio id="res5" 
+						value="#{mbRegistro.form.fichaAcademica.datoSalud.tieneSeguro}" 
+						required="true" 
+						requiredMessage="#{msg_generales.msg_dato_requerido}"
+						disabled="#{mbRegistro.form.modoLectura}">
+			
+						<p:ajax update="afili clinica"></p:ajax>
+						<f:selectItems value="#{mbRegistro.form.respuestas}"/>						
+			            
+				    </p:selectOneRadio>
+				</div>
+<!-- 	+++++++++++ -->
+				<div class="col-md-6  form-group">
+					<h:outputLabel value="#{msg_generales.numero_afiliacion}" 
+								for="afili"/>
+				</div>
+				<div class="col-md-6 form-group">
+					<p:inputText id="afili" styleClass="form-control"
+						required="#{mbRegistro.form.fichaAcademica.datoSalud.tieneSeguro}"
+						maxlength="50" widgetVar="afili"
+						readonly="#{!mbRegistro.form.fichaAcademica.datoSalud.tieneSeguro}"  
+						value="#{mbRegistro.form.fichaAcademica.datoSalud.numeroAfiliacion}"
+						requiredMessage="#{msg_generales.msg_dato_requerido}">
+						
+						<f:converter converterId="limpiaCaracteresEspeciales"/>
+						<p:ajax event="blur" update="msgafili"/>
+						
+					</p:inputText>
+					<p:message id="msgafili" for="afili" display="text"/>
+				</div>
+<!-- 	+++++++++++ -->
+				<div class="col-md-6  form-group">
+					<h:outputLabel value="#{msg_generales.clinica}" 
+								for="clinica"/>
+				</div>
+				<div class="col-md-6 form-group">
+					<p:inputText id="clinica" styleClass="form-control"
+						required="#{mbRegistro.form.fichaAcademica.datoSalud.tieneSeguro}"
+						maxlength="50"
+						readonly="#{!mbRegistro.form.fichaAcademica.datoSalud.tieneSeguro}" 
+						value="#{mbRegistro.form.fichaAcademica.datoSalud.clinica}"
+						requiredMessage="#{msg_generales.msg_dato_requerido}">
+						
+						<f:converter converterId="limpiaCaracteresEspeciales"/>
+						<p:ajax event="blur" update="msgclinica"/>
+						
+					</p:inputText>
+					<p:message id="msgclinica" for="clinica" display="text"/>
+				</div>
+<!-- 	+++++++++++ -->
+
+<!-- 				<div class="col-md-6 form-group"> -->
+<!-- 					<span class="obligatorio">*</span> <label for="clinica">Clínica:</label> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-md-6 form-group"> -->
+<!-- 					<input type="text" id="clinica" /> -->
+<!-- 				</div> -->
+			</div>
+		</div>
+	</div>
+	</section>
+
+</ui:component>

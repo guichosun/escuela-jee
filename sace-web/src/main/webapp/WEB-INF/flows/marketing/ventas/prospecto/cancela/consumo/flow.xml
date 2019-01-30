@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        				  http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	  start-state="decisionLlenarODirecto" parent="parent-flow">
+	  
+	<secured attributes="ROLE_MKT_DIR, ROLE_MKT, ROLE_ROOT" match="any"/>
+
+	<var name="mbRegistro" class="mx.qr.sace.mb.MBCancelaProspecto"/>
+	
+	<input name="prospectoDeAlerta" />
+	
+	<on-start>
+    	<set name="requestScope.como" value="requestParameters.como" />
+		<evaluate expression="mbRegistro.inicializa()" />
+    </on-start>
+	
+	<decision-state id="decisionLlenarODirecto">
+		<if test="prospectoDeAlerta != null" then="actionLlenarCampos" else="consumo"/>
+	</decision-state>
+
+    <action-state id="actionLlenarCampos">
+		<evaluate expression="mbRegistro.inicializaProspecto(prospectoDeAlerta)"/> 
+		<transition to="registro"></transition>
+	</action-state>
+	
+	<view-state id="consumo" view="formulario.xhtml">
+		<on-entry>
+		 	<evaluate expression="mbRegistro.inicializaForm(requestScope.como)" />
+		 </on-entry>
+		<transition on="modificaRegistro" to="formularioCandidato" />
+<!-- 		<transition on="cancelaRegistro" to="consumo"> -->
+<!-- 			<set name="requestScope.como" value="mbRegistro.form.tipoConsuMo" /> -->
+<!-- 		</transition> -->
+	</view-state>
+</flow> 

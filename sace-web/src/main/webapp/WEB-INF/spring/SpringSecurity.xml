@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bean:beans xmlns="http://www.springframework.org/schema/beans" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:security="http://www.springframework.org/schema/security" 
+            xmlns:bean="http://www.springframework.org/schema/beans" 
+            xmlns:jee="http://www.springframework.org/schema/jee"
+            xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+            http://www.springframework.org/schema/security
+            http://www.springframework.org/schema/security/spring-security-3.1.xsd
+            http://www.springframework.org/schema/jee
+            http://www.springframework.org/schema/jee/spring-jee-3.1.xsd">
+	
+	<!-- 
+		Configurar spring security 
+	-->
+	
+	<security:http disable-url-rewriting="true" use-expressions="true" auto-config="true">
+	
+		<security:form-login login-page="/app/login"  
+							 always-use-default-target="true"
+							 authentication-failure-url="/app/login?error=credencialesInvalidas"/>
+		
+		<!-- delete-cookies limpia la cookie de sesión para evitar que cuando se haga un logout también
+		 se genere un submit con una sesión inválida y se redireccione a invalid-session-url-->
+		<security:logout logout-success-url="/app/login?logout=true" delete-cookies="JSESSIONID"/>
+		<security:intercept-url pattern="/app/error*" access="permitAll"/>
+		<security:intercept-url pattern="/app/login*" access="permitAll"/>
+		<security:intercept-url pattern="/app/javax.faces.resource/**" access="permitAll"/>
+		<security:intercept-url pattern="/app/resources/img/BG-encabezado.png" access="permitAll"/>
+		<security:intercept-url pattern="/app/resources/js/jquery.flexslider-2.1.js" access="permitAll"/>
+		<security:intercept-url pattern="/app/resources/js/html5shiv.js-v3.6.2.js" access="permitAll"/>
+		<security:intercept-url pattern="/app/resources/img/process_warning_32.png" access="permitAll"/>
+		
+		<security:intercept-url pattern="/app/resources/img/icons.png" access="permitAll"/>
+		<security:intercept-url pattern="/app/resources/img/icons-blanco.png" access="permitAll"/>
+		<security:intercept-url pattern="/app/resources/img/icons-negro.png" access="permitAll"/>
+		<security:intercept-url pattern="/app/resources/img/noticia1.jpg" access="permitAll"/>
+		<security:intercept-url pattern="/app/resources/img/noticia2.jpg" access="permitAll"/>
+		<security:intercept-url pattern="/app/resources/img/bg_direction_nav.png" access="permitAll"/>
+		
+		<security:intercept-url pattern="/**" access="isAuthenticated()"/> 
+		
+		<security:custom-filter ref="filtroEntradaApp" before="FORM_LOGIN_FILTER"/>
+		<security:custom-filter ref="sessionManagementFilter" before="SESSION_MANAGEMENT_FILTER"/>
+		
+		<security:session-management  invalid-session-url="/app/login?execution=e1s1&amp;error=2" 
+									  session-authentication-strategy-ref="sessionAuthenticationStrategy"/>
+	</security:http>
+	
+	<jee:jndi-lookup id="SACEdataSource" jndi-name="${aplicacion.datasource.jndiName}" />
+	
+	<security:authentication-manager alias="authenticationManager">
+<!-- 	Los proveedores de autentificación sirven o ahcen la tarea de obtener las credenciales -->
+		<security:authentication-provider user-service-ref="JDBCDAOImpl" />
+	</security:authentication-manager>
+	
+<!-- 	Bean encargado de de pasarle los datos del  usuario al authentification provedir -->
+<!-- 	<bean:bean id="JDBCDAOImpl" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl"> -->
+	<bean:bean id="JDBCDAOImpl" class="mx.qr.sace.seguridad.DetalleRolesUsuario">
+		<bean:property name="dataSource" ref="SACEdataSource"></bean:property>
+		<bean:property name="usersByUsernameQuery" 
+			value="SELECT nombre as username, passwd as password, habilitado as enabled
+				   FROM usuarios WHERE nombre=?"/>
+		<bean:property name="authoritiesByUsernameQuery" 
+			value="SELECT nombre_usuario as username, rol as authority
+				   FROM roles WHERE nombre_usuario=?"/>
+	</bean:bean>
+	
+	<!-- INCIO - CLASE PARA AGREGAR A LA AUTENTICACIÓN EL CAPTCHA -->
+	<!-- Bean que permite instanciar métodos que sobre escriben aquellos que validan los elementos de login -->
+	<bean:bean id="filtroEntradaApp" class="mx.qr.sace.seguridad.FiltroAutentificacion"> 
+        <bean:property name="authenticationManager" ref="authenticationManager"/>
+        <bean:property name="sessionAuthenticationStrategy" ref="sessionAuthenticationStrategy" />
+ 		<bean:property name="succesUrl" value="/app/home"/>
+		<bean:property name="errorUrl" value="/app/login?execution=e1s1&amp;error=1"/> 
+    </bean:bean>
+    <!-- FIN - CLASE PARA AGREGAR A LA AUTENTICACIÓN EL CAPTCHA -->
+	
+	
+	<!-- Bean que permite la referencia al registro del filtro de sesión -->
+    <bean:bean id="concurrencyFilter"
+			    class="org.springframework.security.web.session.ConcurrentSessionFilter">
+    			<bean:property name="sessionRegistry" ref="sessionRegistry" />
+    			<bean:property name="expiredUrl" value="/app/error?error=sesEx" />
+  	</bean:bean>
+	
+	<!-- INICIO - FILTRO PARA DETECTAR UNA SESIÓN INVÁLIDA -->
+	<bean id="sessionManagementFilter" class="org.springframework.security.web.session.SessionManagementFilter">
+		<constructor-arg name="securityContextRepository" ref="httpSessionSecurityContextRepository" />
+		<!-- this permits redirection to session timeout page from javascript/ajax or http -->
+    	<property name="invalidSessionStrategy" ref="jsfRedirectStrategy" />
+    	<property name="sessionAuthenticationStrategy" ref="sessionAuthenticationStrategy" />
+	</bean>
+
+	<!-- Clase personalizada para soportar solicitudes ajax -->
+	<bean id="jsfRedirectStrategy" class="mx.qr.sace.seguridad.CustomInvalidSessionStrategy">
+		<constructor-arg name="invalidSessionUrl" value="/app/login?error=sesionInvalida"/>
+	</bean>
+	
+	<bean id="httpSessionSecurityContextRepository" class="org.springframework.security.web.context.HttpSessionSecurityContextRepository"/>
+	<!-- FIN - FILTRO PARA DETECTAR UNA SESIÓN INVÁLIDA -->
+	
+	<!-- INICIO - FILTRO PARA EL MANEJO DE SESIONES CONCURRENTES -->
+	<bean id="sessionAuthenticationStrategy" class="org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy">
+		<constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+		<property name="exceptionIfMaximumExceeded" value="true"/>
+		<property name="maximumSessions" value="1"/>
+	</bean>
+	
+	<bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl"/>
+	<!-- FIN - FILTRO PARA EL MANEJO DE SESIONES CONCURRENTES -->
+	
+</bean:beans>

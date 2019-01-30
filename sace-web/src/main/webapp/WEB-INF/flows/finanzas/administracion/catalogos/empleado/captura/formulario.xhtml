@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sf="http://www.springframework.org/tags/faces"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:qr="http://qr.mx/ui"
+	template="/templates/template.xhtml">
+
+	<ui:define name="CONTENT">
+		<div class="container">
+
+			<qr:migaja 
+				listaEtapa="#{mbRegistro.form.migajas}"
+				accion="#{mbRegistro.form.accionModulo.label}"/>
+
+			<seccion class="titulo">
+				<div class="row">
+					<div class="col-md-1">
+						
+						<qr:hamburguesa
+							accion="captura"  
+							consultaLink="#{request.contextPath}/app/finanzas/consumo?como=3"
+							modificaLink="nolink"
+							eliminaLink="nolink"/>
+						
+					</div>
+					<div class="col-md-11">
+						<h1><h:outputText value="Registro de Empleados"/></h1>
+					</div>
+				</div>		
+			</seccion>
+		    			
+			<h:form id="theForm" binding="#{theForm}" >
+				<p class="help-block">Los campos con (<span class="obligatorio">*</span>) son requeridos.</p>				
+
+				<p:growl for="mensajesInfo" autoUpdate="true" id="growlExito" />				
+				<p:messages for="mensajesError" autoUpdate="true"/>
+				<p:messages for="mensajesAdvertenciaMain" autoUpdate="true"/>
+									
+				<c:choose>
+					<c:when test="#{true}">
+					<ui:include src="../datosPersonales.xhtml"/>
+            <h3>Tipo empleado</h3>
+    <section>
+	    <div class="row">
+                <div class="col-md-6">
+                <div class="row">
+                <div class="col-md-2 form-group"><input type="checkbox"></input></div>
+                <div class="col-md-7 form-group"><label>¿Es profesor?</label></div>                
+                </div>
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 form-group"><input type="button" value="Agregar"></input></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6"> aqui va el componente de prime de una tabla que va a incrementar las filas con la accion del boton. la tabla debera llevar los campos que se muestran abajo</div>
+        </div>
+        <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-5 form-group"><label>Nivel:</label></div>
+                        <div class="col-md-7 form-group"><input type="text" class="form-control"></input></div>
+                    </div>
+                </div>		
+                <div class="col-md-4">
+                        <div class="row">
+                        <div class="col-md-5 form-group"><label for="AmaternoProf">Carrera:</label></div>
+                        <div class="col-md-7 form-group"><input type="text" class="form-control"></input></div>
+                        </div>
+                </div>    
+                <div class="col-md-4">
+                        <div class="row">
+                        <div class="col-md-5 form-group"><label for="AmaternoProf">C&eacute;dula:</label></div>
+                        <div class="col-md-7 form-group"><input type="text" class="form-control"></input></div>
+                        </div>
+                </div>
+        </div>
+    </section>
+			<h3>Acceso a SACE</h3>
+	<section>
+    	<div class="row">
+                <div class="col-md-6">
+                <div class="row">
+                <div class="col-md-2 form-group"><input type="checkbox"></input></div>
+                <div class="col-md-7 form-group"><label>Dar acceso a SACE</label></div>                
+                </div>
+                </div>
+        </div>
+    	<div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-5"><label for="usuario">Usuario:</label></div>
+                    <div class="col-md-7 form-group"><input type="text" class="form-control"></input></div>
+                    <div class="col-md-5"><label for="pass">Contraseña:</label></div>
+                    <div class="col-md-7 form-group"><input type="text" class="form-control"></input></div>
+                    <div class="col-md-5 form-group">
+                    <label for="medicamento">Estatus:</label>
+                    </div>
+                    <div class="col-md-7 form-group">
+                    <input type="radio" name="radio" id="radio" value="true"/>
+                    <label for="radio">Activo</label>
+                    <input type="radio" name="radio" id="radio1" value="true"/>
+                    <label for="radio1">Inactivo</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+            	<table>
+                	<tr> <!--fila-->
+                    	<td><!--columna-->
+                    	<input type="checkbox"></input>
+                        <label>Administrador</label>
+                    	</td>
+                        <td><!--columna-->
+                    	<input type="checkbox"></input>
+                        <label>Dirección Mercadotécnia</label>
+                    	</td>
+                        <td><!--columna-->
+                    	<input type="checkbox"></input>
+                        <label>Dirección Finanzas</label>
+                    	</td>
+                    </tr>
+                    <tr> <!--fila-->
+                    	<td><!--columna-->
+                    	<input type="checkbox"></input>
+                        <label>Dirección CE</label>
+                    	</td>
+                        <td><!--columna-->
+                    	<input type="checkbox"></input>
+                        <label>Dirección CA</label>
+                    	</td>
+                        <td><!--columna-->
+                    	<input type="checkbox"></input>
+                        <label>Secretaría Mercadotécnia</label>
+                    	</td>                        
+                    </tr>
+                    <tr> <!--fila-->
+                    	<td><!--columna-->
+                    	<input type="checkbox"></input>
+                        <label>Secretaría Finanzas</label>
+                    	</td>
+                        <td><!--columna-->
+                    	<input type="checkbox"></input>
+                        <label>Secretaría CA</label>
+                    	</td>
+                        <td><!--columna-->
+                    	<input type="checkbox"></input>
+                        <label>Secretaría CA</label>
+                    	</td>                        
+                    </tr>
+                </table>
+                <!--div class="row">
+                    <div class="col-md-2 form-group"><input type="checkbox"></input></div>
+                	<div class="col-md-7 form-group"><label>Administrador</label></div> 
+                    <div class="col-md-2 form-group"><input type="checkbox"></input></div>
+                	<div class="col-md-7 form-group"><label>Dirección Mercadotecnia</label></div> 
+                    <div class="col-md-5 form-group">
+                    <label for="medicamento">Estatus:</label>
+                    </div>
+                    <div class="col-md-7 form-group">
+                    <input type="radio" name="radio" id="radio" value="true"/>
+                    <label for="radio">Activo</label>
+                    <input type="radio" name="radio" id="radio1" value="true"/>
+                    <label for="radio1">Inactivo</label>
+                    </div>
+                </div-->
+            </div>
+        </div>
+	</section>       
+       
+    
+					
+					</c:when>
+					<c:otherwise>
+						<section>
+							<div class="row">
+								<div class="col-md-6">
+									<p>#{msg_generales.msg_sin_informacion}</p>
+								</div>
+							</div>
+						</section>
+					</c:otherwise>
+				</c:choose>
+<!-- Con este elemento se genera la flecha de Scroll to top :) -->
+			<a href="#" title="Subir" class="back-to-top" style="display: none;"><i class="fa fa-chevron-circle-up"></i></a>
+							
+				<div id="botones" class="form-group text-center">
+<!-- 					<sec:authorize ifAnyGranted="ROLE_CA, ROLE_CA_DIR, ROLE_ROOT"> -->
+<!-- 						<p:blockUI block="theForm" -->
+<!-- 							trigger="btnGuardar"> -->
+
+<!-- 							<h:graphicImage library="img" name="loader.gif" width="70" /> -->
+	
+<!-- 							<h:outputText value="#{msg_generales.msg_procesando_informacion}" -->
+<!-- 								style="white-space: nowrap;" /> -->
+<!-- 						</p:blockUI> -->
+<!-- 						<p:commandButton value="#{msg_generales.lbl_button_Aceptar}" -->
+<!-- 							disabled="${mbRegistro.form.btnGuardarDisabled}" -->
+<!-- 							id="btnGuardar" 							 -->
+<!-- 							 ajax="false" -->
+							 
+<!-- 					 		action="#{mbRegistro.guardaHandler}" /> -->
+<!-- 					</sec:authorize> -->
+				</div>
+			</h:form>
+		</div>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE log4j:configuration PUBLIC "-//LOGGER" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- Appenders -->
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- Clase que generó el evento	[Método:Número de línea] - Mensaje y Salto de línea  -->
+			<param name="ConversionPattern" value="%c[%M:%L] - %m%n" />
+		</layout>
+	</appender>
+    
+    <appender name="file" class="org.apache.log4j.RollingFileAppender">
+	     <param name="File" value="${jboss.server.log.dir}/SACE-WEB.log" />
+	     <param name="Append" value="true"/>
+	     <param name="MaxFileSize" value="20MB"/>
+		 <param name="MaxBackupIndex" value="10" />
+	     <layout class="org.apache.log4j.PatternLayout">
+	     	 <!-- Fecha y hora [Nombre del hilo] Prioridad del logger Clase que generó el evento	[Método:Número de línea] - Mensaje y Salto de línea  -->
+	         <param name="ConversionPattern" value="%d [%t] %p %c[%M:%L] - %m%n"/>
+	     </layout>
+ 	</appender>
+	<appender name="ASYNC" class="org.apache.log4j.AsyncAppender">  
+        <appender-ref ref="console" />  
+        <appender-ref ref="file" />  
+	</appender>
+	<!-- Application Loggers -->
+	<logger name="mx.qr.sace" additivity="true">
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
+		<appender-ref ref="file" />
+	</logger>
+	
+	<!-- Application Loggers -->
+	<logger name="org.springframework" additivity="true">
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
+		<appender-ref ref="file" />
+	</logger>
+	
+	<logger name="org.primefaces" additivity="true">
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
+		<appender-ref ref="file" />
+	</logger>
+	
+	<!-- Root Logger -->
+	<root>
+		<priority value="DEBUG" />
+		<appender-ref ref="ASYNC" />
+	</root>
+</log4j:configuration>

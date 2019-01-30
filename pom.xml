@@ -1,0 +1,226 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>mx.qr.escolar</groupId>
+	<artifactId>sace-parent</artifactId>
+	<version>0.7-BETA</version>
+	<packaging>pom</packaging>
+	<name>Sistema de Administracion y Control Escolar</name>
+	<description>Es la herramienta informatica para la gestion y control escolar</description>
+
+	<developers>
+		<developer>
+			<name>Luis guichosun d C Quintana</name>
+			<email>luis.albertodelcampo@gmail.com</email>
+		</developer>
+		<developer>
+			<name>Adolfo Rosaliano R</name>
+			<roles>
+				<role>Documentador</role>
+				<role>QA Tester</role>
+				<role>UX dev</role>
+			</roles>
+			<email>adoques@gmail.com</email>
+		</developer>
+		<developer>
+			<name>Clemencia Cuellar</name>
+			<email>cleme.cuellar@gmail.com</email>
+		</developer>
+		<developer>
+			<name>Angelica Medina R</name>
+			<email>angymr@gmail.com</email>
+		</developer>
+	</developers>
+
+	<properties>
+	
+		<core-api.version>1.1.1</core-api.version>
+		
+		<!-- encoding -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<version.jboss.maven.plugin>7.4.Final</version.jboss.maven.plugin>
+
+		<!--java version -->
+		<version.java>1.7</version.java>
+
+		<version.jboss.as>7.5.0.Final-redhat-21</version.jboss.as>
+		<version.jboss.spec.javaee.6.0>3.0.2.Final-redhat-15</version.jboss.spec.javaee.6.0>
+		<!-- plugin versions -->
+		<!-- <version.ear.plugin>2.9</version.ear.plugin> -->
+		<!-- <version.ejb.plugin>2.3</version.ejb.plugin> -->
+		<!-- <version.war.plugin>2.4</version.war.plugin> -->
+		<version.ear.plugin>2.8</version.ear.plugin>
+		<version.ejb.plugin>2.3</version.ejb.plugin>
+		<version.war.plugin>2.1.1</version.war.plugin>
+
+		<version.compiler.plugin>3.1</version.compiler.plugin>
+		<version.java>1.7</version.java>
+
+		<!-- dependency versions -->
+		<version.javaee.api>7.0</version.javaee.api>
+
+		<!-- EJB spec version -->
+		<version.ejb.spec>3.2</version.ejb.spec>
+
+		<!-- maven-compiler-plugin -->
+		<maven.compiler.target>1.6</maven.compiler.target>
+		<maven.compiler.source>1.6</maven.compiler.source>
+	</properties>
+
+	<modules>
+		<module>sace-ear</module>
+		<module>sace-web</module>
+		<module>sace-marketing-ejb</module>
+		<module>sace-controlacademico-ejb</module>
+		<module>sace-persistence</module>
+		<module>sace-controlescolar-ejb</module>
+		<module>sace-core-api</module>
+		<module>sace-finanzas-ejb</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Define Log4j dependency and its version -->
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>1.2.16</version>
+				<!-- <scope>compile</scope> -->
+			</dependency>
+			<!-- Importa el proyecto jar con la funcionalidad genera -->
+			<dependency>
+				<groupId>mx.qr.apis</groupId>
+				<artifactId>core-api</artifactId>
+				<version>${core-api.version}</version>
+				<type>jar</type>
+			</dependency>
+			<!-- Define las versiones del jar del api de sace, para que no tengamos que repetir 
+				la dependencia en cada modulo -->
+			<dependency>
+				<groupId>mx.qr.escolar</groupId>
+				<artifactId>sace-core-api</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			
+			<!-- Define las versiones del jar EJB, para que no tengamos que repetir 
+				la dependencia en cada modulo -->
+			<dependency>
+				<groupId>mx.qr.escolar</groupId>
+				<artifactId>sace-marketing-ejb</artifactId>
+				<version>${project.version}</version>
+				<type>ejb</type>
+			</dependency>
+			<!-- Define las versiones del jar EJB, para que no tengamos que repetir 
+				la version en cada modulo -->
+			<dependency>
+				<groupId>mx.qr.escolar</groupId>
+				<artifactId>sace-controlacademico-ejb</artifactId>
+				<version>${project.version}</version>
+				<type>ejb</type>
+			</dependency>
+			
+			<dependency>
+				<groupId>mx.qr.escolar</groupId>
+				<artifactId>sace-finanzas-ejb</artifactId>
+				<version>${project.version}</version>
+				<type>ejb</type>
+			</dependency>
+			
+			<dependency>
+				<groupId>mx.qr.escolar</groupId>
+				<artifactId>sace-controlescolar-ejb</artifactId>
+				<version>${project.version}</version>
+				<type>ejb</type>
+			</dependency>
+
+			<!-- Importa el proyecto ejb para que los MB puedan usarlos -->
+			<dependency>
+				<groupId>mx.qr.escolar</groupId>
+				<artifactId>sace-persistence</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+
+			<!-- Define las versiones del WAR, para que no tengamos que repetir la 
+				dependencia en cada modulo -->
+			<dependency>
+				<groupId>mx.qr.escolar</groupId>
+				<artifactId>sace-war</artifactId>
+				<version>${project.version}</version>
+				<type>war</type>
+			</dependency>
+			
+			<!-- Define la version del API de Java EE 6 de JBoss que queremos importar. 
+				Any dependencies from org.jboss.spec will have their version defined by this 
+				BOM -->
+			<!-- JBoss distributes a complete set of Java EE 6 APIs including a Bill 
+				of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection) 
+				of artifacts. We use this here so that we always get the correct versions 
+				of artifacts. Here we use the jboss-javaee-6.0 stack (you can read this as 
+				the JBoss stack of the Java EE 6 APIs). You can actually use this stack with 
+				any version of JBoss EAP that implements Java EE 6. -->
+			<dependency>
+				<groupId>org.jboss.spec</groupId>
+				<artifactId>jboss-javaee-6.0</artifactId>
+				<version>${version.jboss.spec.javaee.6.0}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- JASPERREPORTS	 -->
+<!-- 			<dependency> -->
+<!-- 				<groupId>net.sf.jasperreports</groupId> -->
+<!-- 				<artifactId>jasperreports</artifactId> -->
+<!-- 				<version>6.2.0</version> -->
+<!-- 				<scope>compile</scope> -->
+<!-- 			</dependency> -->
+			
+		<!-- Import the CDI API, we use provided scope as the API is included in 
+			JBoss EAP 6 -->
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Import the Common Annotations API (JSR-250), we use provided scope 
+			as the API is included in JBoss EAP 6 -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.annotation</groupId>
+			<artifactId>jboss-annotations-api_1.1_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Import the injection annotations -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- compiler plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${version.compiler.plugin}</version>
+					<configuration>
+						<source>${version.java}</source>
+						<target>${version.java}</target>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

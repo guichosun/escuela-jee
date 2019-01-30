@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>mx.qr.escolar</groupId>
+    <artifactId>sace-parent</artifactId>
+    <version>0.7-BETA</version>
+  </parent>
+  
+  <artifactId>sace-finanzas-ejb</artifactId>
+  
+  <name>sace-finanzas-ejb</name>
+  <description>La funcionalidad del area de finanzas</description>
+  
+  <dependencies>
+
+		<!-- Define Log4j dependency and its version -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+
+		
+		<!-- Importa el proyecto ejb para que los MB puedan usarlos -->
+		<dependency>
+			<groupId>mx.qr.escolar</groupId>
+			<artifactId>sace-persistence</artifactId>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- Importa el proyecto sace-core-api para que lo vea marketing -->
+		<dependency>
+			<groupId>mx.qr.escolar</groupId>
+			<artifactId>sace-core-api</artifactId>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- Import the EJB API, con scope de provided ya que este API se incluye 
+			en JBoss EAP 6 -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.1_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- Import the JPA API, we use provided scope as the API is included in 
+			JBoss EAP 6 -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.transaction</groupId>
+			<artifactId>jboss-transaction-api_1.1_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Import the JPA API, we use provided scope as the API is included in 
+			JBoss EAP 6 -->
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	
+</project>

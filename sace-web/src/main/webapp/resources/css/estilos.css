@@ -1,0 +1,140 @@
+/*----------------------------------------------------*/
+/* Hoja de Estilos para afectar                       */
+/*   Elementos de primefaces y Bootstrap              */
+/*----------------------------------------------------*/
+
+/*Para boton subir*/
+.back-to-top {
+	color               : rgba(0, 0, 0, .5);
+	bottom              : 2%;
+	clear               : both;
+	cursor              : hand;
+	cursor              : pointer;
+	display             : block;
+	display             : none;
+	font-size           : 52px;
+	height              : 46px;
+	padding-left        : 7px;
+	position            : fixed;
+	right               : 2%;
+	width               : 46px;
+	z-index             : 1;
+}
+.back-to-top:hover {	
+	color               : #D4007F;
+	-webkit-transition  : background-color 300ms ease-out;
+	-moz-transition     : background-color 300ms ease-out;
+}
+
+/*Clases necesarias para el Big Menu*/
+.yamm .nav, .yamm .collapse, .yamm .dropup, .yamm .dropdown {
+	position : static;
+}
+.yamm .container {
+	position : relative;
+}
+.yamm .dropdown-menu {
+	left     : auto;
+}
+.yamm .nav.navbar-right .dropdown-menu {
+	left     : auto;
+	right    : 0;
+}
+.yamm .yamm-content {
+	padding  : 20px 30px;
+}
+.yamm .dropdown.yamm-fw .dropdown-menu {
+	left     : 0;
+	right    : 0;
+}
+
+/*Modificar el Estilo de componente Sticky*/
+#formVerificaciGabinete:tb .ui-widget-header {
+	border: 1px solid #b89f7a;
+	background: #f2eee2;
+	background: #c4c4c4 linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0));
+	background: #c4c4c4 -moz-linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0));
+}
+#formVerificaciGabinete:tb {
+	padding-left: 10px;
+}
+.ui-widget-header {
+	background: #f2eee2;
+	border: 1px solid #b89f7a;
+	background: #c4c4c4 linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0));
+	background: #c4c4c4 -moz-linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0));
+	color     : #333;
+	font-weight: bold;
+	text-shadow: 0px 1px 0px rgba(255,255,255,0.7);
+}
+.ui-message-info,.ui-message-error,.ui-message-warn,.ui-message-fatal {
+	border  : 0 !important;
+	margin  : 0 !important;
+	padding : 0 !important;
+}
+.ui-messages-error,.ui-message-error {
+	color            : #D8000C;
+	background-color : #fff !important;
+	font-size        : 12px !important;
+}
+.ui-message-error-icon {
+	display: none!important;
+}
+.ui-messages-info-detail, .ui-messages-warn-detail, .ui-messages-error-detail, .ui-messages-fatal-detail, .ui-message-info-detail, .ui-message-warn-detail, .ui-message-error-detail, .ui-message-fatal-detail {
+	margin-left      : 0px !important;
+}
+
+/* Elemento Sticky */
+.ui-widget-header {
+	background    : #f8f6f0;
+	border        : 1px solid #b89f7a;
+	padding       : 5px 20px 15px!important;
+	background    : #c4c4c4 linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0));
+	background    : #c4c4c4 -moz-linear-gradient(top, rgba(255,255,255,0.8), rgba(255,255,255,0));
+	color         : #333;
+	font-weight   : bold;
+	text-shadow   : 0px 1px 0px rgba(255,255,255,0.7);
+}
+.ui-toolbar-group-left {
+	float: none;
+}
+
+/* Radio buttons */
+.ui-icon-bullet {
+	background-position: -81px -145px;
+}
+.ui-radiobutton-icon {
+	margin-left: 0px;
+}
+/* Evitar Que los Radios Se muevan */
+.ui-radiobutton-icon {
+	margin-left : 0px;
+}
+.ui-icon {
+	display           : block;
+	text-indent       : -99999px;
+	overflow          : none; 
+	background-repeat : no-repeat;
+}
+
+/* Check-box */
+.ui-icon-check {
+	background-position: -64px -145px;
+}
+
+/*PickList*/
+.ui-picklist .ui-picklist-list {
+	list-style-type : none;
+	margin          : 0;
+	padding         : 0;
+	overflow        : none;
+	/*height          : 200px;
+	width           : 350px;*/
+}
+
+/*Espacio en checkbox y radios*/
+.ui-selectmanycheckbox label, .ui-selectoneradio label {
+	display: block;
+	margin-top: none;
+	margin-left: 5px;
+}

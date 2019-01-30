@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        				  http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	  start-state="decisionLlenarODirecto" parent="parent-flow">
+	  
+	<secured attributes="ROLE_MKT_DIR, ROLE_MKT, ROLE_ROOT" match="any"/>
+
+	<var name="mbRegistro" class="mx.qr.sace.mb.MBCancelaProspecto"/>
+	
+	<input name="prospectoDeAlerta" />
+	
+	<decision-state id="decisionLlenarODirecto">
+		<if test="prospectoDeAlerta != null" then="actionLlenarCampos" else="registro"/>
+	</decision-state>
+
+    <action-state id="actionLlenarCampos">
+		<evaluate expression="mbRegistro.inicializaProspecto(prospectoDeAlerta)"/> 
+		<transition to="registro"></transition>
+	</action-state>
+	
+	<view-state id="registro" view="formulario.xhtml">
+		<on-entry>
+			<evaluate expression="mbRegistro.inicializa()" />
+			<evaluate expression="mbRegistro.inicializaForm(1)" />
+			<evaluate expression="mbRegistro.inicializaSistemaEstudios(flowScope.sistemaEstudioFlujo)" />
+		</on-entry>
+		<transition on="guarda" to="registro" >
+			<set name="flowScope.sistemaEstudioFlujo" value="mbRegistro.form.sistemaEstudioFormulario"></set>
+		</transition>
+		<transition on="cancelar" to="esHome" />
+	</view-state>
+</flow> 

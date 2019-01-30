@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sf="http://www.springframework.org/tags/faces"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+	<pe:blockUI target="@form" widgetVar="blockUI" >
+		<h:graphicImage library="img" name="loader.gif" width="70" />
+	</pe:blockUI>
+	
+	<h3>#{messageSource['lbl_datos_personales']}</h3>
+	<section>
+		<div class="row">
+			<div class="col-md-6">
+<!-- 			APELLIDO PATERNO -->
+				<div class="row form-group">
+					<div class="col-md-5">
+						<span class="obligatorio">*</span>
+						<h:outputLabel value="#{messageSource['lbl_ape_pat']}" 
+								for="apellidoPaterno"/>
+					</div>
+					<div class="col-md-7">
+						<p:inputText id="apellidoPaterno" styleClass="form-control"
+							placeholder="Apellido Paterno" required="true" readonly="#{mbRegistro.form.modoLectura}"
+							maxlength="50" binding="#{apellidoPaterno}" 
+							value="#{mbRegistro.form.dominio.datoPersona.apePaterno}"
+							requiredMessage="#{messageSource['msg_dato_requerido']}">
+							
+							<f:converter converterId="limpiaCaracteresEspeciales"/>
+							<p:ajax event="blur" update="msgApellidos"/>
+							
+						</p:inputText>
+						<p:message id="msgApellidos" for="apellidoPaterno" 
+							display="text"/>
+					</div>
+				</div>
+<!-- 				APELLIDO MATERNO -->
+				<div class="row form-group">
+					<div class="col-md-5">
+						<span class="obligatorio">*</span>
+						<h:outputLabel value="#{messageSource['lbl_ape_mat']}" 
+								for="apellidoMaterno"/>
+					</div>
+					<div class="col-md-7">
+						<p:inputText id="apellidoMaterno" styleClass="form-control"
+							placeholder="Apellido Materno" required="true" readonly="#{mbRegistro.form.modoLectura}"
+							maxlength="50" binding="#{apellidoMaterno}" 
+							value="#{mbRegistro.form.dominio.datoPersona.apeMaterno}"
+							requiredMessage="#{messageSource['msg_dato_requerido']}">
+							
+							<f:converter converterId="limpiaCaracteresEspeciales"/>
+							<p:ajax event="blur" update="msgApellidosM"/>
+							
+						</p:inputText>
+						<p:message id="msgApellidosM" for="apellidoMaterno" 
+							display="text"/>
+					</div>
+				</div>
+<!-- 				NOMBRE -->
+				<div class="row form-group">
+					<div class="col-md-5">
+						<span class="obligatorio">*</span>
+						<h:outputLabel value="#{messageSource['lbl_nombres']}" 
+								for="nombre"/>
+					</div>
+					<div class="col-md-7">
+						<p:inputText id="nombre" styleClass="form-control"
+							placeholder="Nombre(s)" readonly="#{mbRegistro.form.modoLectura}"
+							value="#{mbRegistro.form.dominio.datoPersona.nombre}" 
+							required="true"
+							maxlength="50"
+							requiredMessage="#{messageSource['msg_dato_requerido']}">
+				
+							<f:converter converterId="limpiaCaracteresEspeciales"/>
+							<p:ajax event="blur" update="messageNom"/>
+							
+						</p:inputText>
+						<p:message id="messageNom" for="nombre" display="text" />
+					</div>
+				</div>
+<!-- 				EDAD -->
+				<div class="row form-group">
+					<div class="col-md-5">
+						<label>
+							<span class="obligatorio">*</span>
+							<h:outputText value="#{messageSource['lbl_edad']}"/>
+						</label>
+					</div>
+					<div class="col-md-7">
+						<p:inputText styleClass="form-control" id="edad" 
+							value="#{mbRegistro.form.dominio.datoPersona.edad}" 
+							placeholder="Edad"
+							maxlength="2" 
+							required="true"
+							readonly="#{mbRegistro.form.modoLectura}"
+							requiredMessage="#{msg_generales.msg_dato_requerido}"
+							converterMessage="#{msg_generales.msg_solo_numeros}">
+								
+							<f:convertNumber integerOnly="true" for="edad"/>
+							<pe:keyFilter regEx="/[0-9]/"/>
+							<p:ajax event="blur" update="mensajeEdad"/>
+							
+						</p:inputText>							
+						<p:message id="mensajeEdad" for="edad" display="text"/>
+					</div>
+				</div>
+<!-- 				GENERO				 -->
+				<div class="row form-group">
+					<div class="col-md-5">
+						<label>
+							<span class="obligatorio">*</span>
+							<h:outputText value="#{messageSource['lbl_sexo']}"/>
+						</label>
+					</div>
+					<div class="col-md-7">
+						<p:selectOneRadio id="sexo" 
+							value="#{mbRegistro.form.dominio.datoPersona.genero}" 
+							required="true" 
+							requiredMessage="#{messageSource['msg_dato_requerido']}"
+							disabled="#{mbRegistro.form.modoLectura}">
+				
+							<f:selectItems value="#{mbRegistro.form.sexos}"></f:selectItems>						
+				            
+					    </p:selectOneRadio>
+					    <p:message for="sexo" display="text"/>
+						
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+<!-- 				DIRECCION -->
+				<div class="row form-group">
+					<div class="col-md-5">
+						<h:outputLabel value="#{messageSource['lbl_direccion']}" 
+								for="direccion"/>
+					</div>
+					<div class="col-md-7">
+						<p:inputText id="direccion" styleClass="form-control" 
+							placeholder="Dirección"
+							value="#{mbRegistro.form.dominio.datoPersona.direccion}"
+							readonly="#{mbRegistro.form.modoLectura}" 
+							maxlength="100">
+				
+							<f:converter converterId="limpiaCaracteresEspeciales"/>
+							<p:ajax event="blur" update="messageDirec"/>
+							
+						</p:inputText>
+						<p:message id="messageDirec" for="direccion" display="text" />
+					</div>
+				</div>
+<!-- 				COLONIA -->
+				<div class="row form-group">
+					<div class="col-md-5">
+						<h:outputLabel value="#{messageSource['lbl_colonia']}" />
+					</div>
+					<div class="col-md-7">
+						<p:inputText id="colonia" styleClass="form-control" 
+							placeholder="Colonia"
+							value="#{mbRegistro.form.dominio.datoPersona.colonia}"
+							readonly="#{mbRegistro.form.modoLectura}" 
+							maxlength="45">
+				
+							<f:converter converterId="limpiaCaracteresEspeciales"/>
+							<p:ajax event="blur" update="messageCol"/>
+							
+						</p:inputText>
+						<p:message id="messageCol" for="colonia" display="text" />
+					</div>
+				</div>
+<!--			TELEFONO CASA -->
+				<div class="row form-group">
+					<div class="col-md-5">
+						<h:outputLabel value="#{messageSource['lbl_telefono_particular']}"
+							style="margin-top: 10px; margin-bottom: 10px;"
+								for="telParticular"/>
+					</div>
+					<div class="col-md-7">
+						<div class="row">
+							<div class="col-md-2">
+		                        <h4>
+		                            <label>01</label>
+		                        </h4>
+		                    </div>
+		                    <div class="col-md-10">
+								<p:inputText styleClass="form-control" id="telParticular" 
+									value="#{mbRegistro.form.dominio.datoPersona.telefonoCasa}"  
+									placeholder="Teléfono particular" 
+									maxlength="8" 
+									readonly="#{mbRegistro.form.modoLectura}"
+									validatorMessage="#{messageSource['msg_no_valido']}">
+									
+									<p:ajax event="blur" update="messageNum"/>
+									<f:validateRegex pattern="^([0-9- .]+)*$" />
+														
+								</p:inputText>
+								<p:message id="messageNum" for="telParticular" display="text" autoUpdate="true" />
+		                    </div>
+	                   </div>
+					</div>
+				</div>
+<!--			CALULAR -->
+				<div class="row form-group">
+					<div class="col-md-5">
+						<label>
+<!-- 							<span class="obligatorio">*</span> -->
+							<h:outputText value="#{messageSource['lbl_cel']}"/>
+						</label>
+					</div>
+					<div class="col-md-7">
+					   <p:inputText styleClass="form-control" id="celular"
+					   		placeholder="#{msg_generales.telefono_a_10_digitos}"
+					   		maxlength="10" 
+					   		readonly="#{mbRegistro.form.modoLectura}"
+					   		value="#{mbRegistro.form.dominio.datoPersona.celular}" 
+							requiredMessage="#{messageSource['msg_dato_requerido']}"
+							validatorMessage="#{messageSource['msg_no_valido']}">
+							
+							<p:ajax event="blur" update="messageCel"/>
+							<f:validateRegex pattern="^([0-9- .]+)*$" />
+							
+						</p:inputText>
+						<p:message id="messageCel" for="celular" display="text" autoUpdate="true" />
+                    </div>
+				</div>
+<!-- 			E-MAIL -->
+				<div class="row form-group">
+					<div class="col-md-5">
+						<h:outputLabel value="#{messageSource['lbl_email']}" 
+								for="correoe"/>
+					</div>
+					<div class="col-md-7">
+						<p:inputText id="correoe" styleClass="form-control"
+							placeholder="Correo electrónico"
+							maxlength="50" 
+							readonly="#{mbRegistro.form.modoLectura}"
+							value="#{mbRegistro.form.dominio.datoPersona.email}"
+							validatorMessage="#{messageSource['msg_no_valido']}">
+							
+							<pe:keyFilter mask="email" />
+							<p:ajax event="blur" update="msgEmail"/>
+							
+						</p:inputText>
+						<p:message id="msgEmail" for="correoe" display="text"/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr/>
+		<div class="row">
+<!-- TIENE TUTOR -->
+			<div class="col-md-4">
+				<div class="row">
+					<div class="col-md-9">
+						<label>
+							<h:outputText value="#{msgMarketing.lbl_mkt_tiene_tutor}"/>					
+						</label>
+					</div>
+					<div class="col-md-3">
+						<p:selectBooleanCheckbox id="tieneTutor" value="#{mbRegistro.form.tieneTutor}"
+							required="true" requiredMessage="#{msg_generales.msg_dato_requerido}"
+							disabled="#{mbRegistro.form.activaCheckTutor()}">
+								
+							<p:ajax update="apellidoPaternoTut apellidoMaternoTut nombreTut celularTut emailTutor telOfLada telTrabajo telExt emailTrabajo"></p:ajax>
+							
+						</p:selectBooleanCheckbox>
+					</div>
+				</div>
+				<p:message id="msgTieneTutor" for="tieneTutor" display="text"/>
+			</div>
+		</div>
+		<div class="row form-group avisosSeccion">
+			<div class="col-md-6">
+				<h4>#{msgMarketing.lbl_mkt_datos_tutor}</h4>
+			</div>
+		</div>
+		<div class="row form-group">
+<!-- APELLIDO PATERNO RESPONSABLE -->
+			<div class="col-md-4">
+						<span class="obligatorio">*</span>
+						<h:outputLabel value="#{messageSource['lbl_ape_pat']}" 
+								for="apellidoPaternoTut"/>
+					<c:if test="#{mbRegistro.form.accionModulo.name eq 'consulta'}"></c:if>
+						<p:inputText id="apellidoPaternoTut" styleClass="form-control"
+							placeholder="Apellido Paterno" required="true"
+							maxlength="50" 
+							readonly="#{mbRegistro.form.accionModulo.name ne 'consulta' ? !mbRegistro.form.tieneTutor : true}" 
+							value="#{mbRegistro.form.tutor.apePaterno}"
+							requiredMessage="#{messageSource['msg_dato_requerido']}">
+							
+							<f:converter converterId="limpiaCaracteresEspeciales"/>
+							<p:ajax event="blur" update="msgApellidosTut"/>
+							
+						</p:inputText>
+						<p:message id="msgApellidosTut" for="apellidoPaternoTut" 
+							display="text"/>
+			</div>
+<!-- APELLIDO MATERNO RESPONSABLE -->
+			<div class="col-md-4">
+						<span class="obligatorio">*</span>
+						<h:outputLabel value="#{messageSource['lbl_ape_mat']}" 
+								for="apellidoMaternoTut"/>
+						<p:inputText id="apellidoMaternoTut" styleClass="form-control"
+							placeholder="Apellido Materno" required="true"
+							maxlength="50" 
+							readonly="#{mbRegistro.form.accionModulo.name ne 'consulta' ? !mbRegistro.form.tieneTutor : true}"
+							value="#{mbRegistro.form.tutor.apeMaterno}"
+							requiredMessage="#{messageSource['msg_dato_requerido']}">
+							
+							<f:converter converterId="limpiaCaracteresEspeciales"/>
+							<p:ajax event="blur" update="msgApellidosMTut"/>
+							
+						</p:inputText>
+						<p:message id="msgApellidosMTut" for="apellidoMaternoTut" 
+							display="text"/>
+			</div>
+<!-- NOMBRE RESPONSABLE -->
+			<div class="col-md-4">
+				<span class="obligatorio">*</span>
+				<h:outputLabel value="#{messageSource['lbl_nombres']}" 
+					for="nombreTut"/>
+				<p:inputText id="nombreTut" styleClass="form-control"
+					placeholder="Nombre(s)" 
+					value="#{mbRegistro.form.tutor.nombre}" 
+					required="true" 
+					readonly="#{mbRegistro.form.accionModulo.name ne 'consulta' ? !mbRegistro.form.tieneTutor : true}"
+					maxlength="50"
+					requiredMessage="#{messageSource['msg_dato_requerido']}">
+		
+					<f:converter converterId="limpiaCaracteresEspeciales"/>
+					<p:ajax event="blur" update="messageNomTut"/>
+					
+				</p:inputText>
+				<p:message id="messageNomTut" for="nombreTut" display="text" />
+			</div>
+		</div>
+		<div class="row form-group">
+<!-- CELULAR TUTOR -->		
+			<div class="col-md-4">
+				<label>
+					<span class="obligatorio">*</span>
+					<h:outputText value="#{messageSource['lbl_cel']}"/>
+				</label>
+				<div class="row" style="margin-top: 0px;">
+					<div class="col-md-6">
+						<p:inputText styleClass="form-control" id="celularTut"
+					   		placeholder="#{msg_generales.telefono_a_10_digitos}" 
+					   		maxlength="10"
+					   		value="#{mbRegistro.form.tutor.celular}"
+							required="true"
+							requiredMessage="#{messageSource['msg_dato_requerido']}"
+							validatorMessage="#{messageSource['msg_no_valido']}"
+							readonly="#{mbRegistro.form.accionModulo.name ne 'consulta' ? !mbRegistro.form.tieneTutor : true}">
+							
+							<p:ajax event="blur" update="messageCel2"/>
+							<f:validateRegex pattern="^([0-9- .]+)*$" />
+							
+						</p:inputText>						
+					</div>
+				</div>
+				<p:message id="messageCel2" for="celularTut" display="text" autoUpdate="true" />
+			</div>
+<!-- E-MAIL TUTOR -->
+			<div class="col-md-4">
+				<h:outputLabel value="#{messageSource['email_tutor']}" 
+						for="emailTutor"/>
+				<p:inputText id="emailTutor" styleClass="form-control"
+						placeholder="e-mail"
+						maxlength="50" 
+						value="#{mbRegistro.form.tutor.correo}"
+						readonly="#{mbRegistro.form.accionModulo.name ne 'consulta' ? !mbRegistro.form.tieneTutor : true}"
+						validatorMessage="#{messageSource['msg_no_valido']}">
+						
+						<pe:keyFilter mask="email" />
+						<p:ajax event="blur" update="msgEmailTutor"/>
+						
+				</p:inputText>
+				<p:message id="msgEmailTutor" for="emailTutor" display="text"/>
+			</div>
+		</div>
+		<div class="row form_group avisosSeccion">
+			<div class="col-md-6">
+				<h4>#{msgMarketing.lbl_informacion_laboral}</h4>
+			</div>
+		</div>
+		<div class="row form-group">
+<!-- TELEFONO TRABAJO -->
+			<div class="col-md-6 col-xs-6">
+	                <h:outputLabel value="#{msg_generales.lbl_telefono_oficina}"
+							style="margin-top: 10px; margin-bottom: 10px;"
+								for="telTrabajo"/>
+				<div class="row">
+					<div class="col-md-1">
+						<h4>
+		                    <h:outputLabel value="52" for="telOfLada" />
+		                </h4>
+					</div>
+<!-- LADA TRABAJO -->					
+					<div class="col-md-3">
+						<p:inputText styleClass="form-control" id="telOfLada"
+							value="#{mbRegistro.form.datoLaboral.ladaTrabajo}"  
+							placeholder="#{msg_generales.lbl_lada}" 
+							maxlength="3" size="3" 
+							validatorMessage="#{messageSource['msg_no_valido']}"
+							readonly="#{mbRegistro.form.modoLectura}">
+									
+							<p:ajax event="blur" update="msmtelOfLada"/>
+							<f:validateRegex pattern="^([0-9- .]+)*$" />
+												
+						</p:inputText>
+						<p:message id="msmtelOfLada" for="telOfLada" display="text" autoUpdate="true" />
+					</div>
+<!-- TELEFONO TRABAJO	             -->					
+					<div class="col-md-5">
+						<p:inputText styleClass="form-control" id="telTrabajo"  
+							value="#{mbRegistro.form.datoLaboral.telefonoTrabajo}"  
+							placeholder="#{msg_generales.lbl_telefono}" 
+							maxlength="8" size="3" 
+							requiredMessage="#{messageSource['msg_dato_requerido']}"
+							validatorMessage="#{messageSource['msg_no_valido']}" 
+							readonly="#{mbRegistro.form.modoLectura}">
+								
+							<p:ajax event="blur" update="messageTelTrab"/>
+							<f:validateRegex pattern="^([0-9- .]+)*$" />
+												
+						</p:inputText>
+						<p:message id="messageTelTrab" for="telTrabajo" display="text" autoUpdate="true" />
+					</div>
+<!-- EXTENSION TRABAJO	             -->					
+					<div class="col-md-3">
+						<p:inputText styleClass="form-control" id="telExt" 
+							value="#{mbRegistro.form.datoLaboral.extensionTrabajo}"  
+							placeholder="#{msg_generales.lbl_extencion}" 
+							maxlength="6" size="3" 
+							validatorMessage="#{messageSource['msg_no_valido']}" 
+							readonly="#{mbRegistro.form.modoLectura}">
+									
+		<!-- 							<p:ajax event="blur" update="messageTelTrab"/> -->
+							<f:validateRegex pattern="^([0-9- .]+)*$" />
+												
+						</p:inputText>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-xs-6">
+<!-- E-MAIL TRABAJO -->			
+				<div class="row">
+					<div class="col-md-7">
+						<h:outputLabel value="#{msg_generales.email_oficina}" 
+							for="emailTrabajo" style="margin-top: 10px; margin-bottom: 10px;"/>
+							
+						<p:inputText id="emailTrabajo" styleClass="form-control" 
+							placeholder="e-mail"
+							maxlength="50" 
+							value="#{mbRegistro.form.datoLaboral.correoTrabajo}" 
+							readonly="#{mbRegistro.form.modoLectura}">
+							
+							<pe:keyFilter mask="email" />
+							<p:ajax event="blur" update="msgEmailTrabajo"/>
+							
+						</p:inputText>
+						<p:message id="msgEmailTrabajo" for="emailTrabajo" display="text"/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 col-xs-6">
+<!-- DONDE TRABAJA				 -->
+				<div class="row form-group">
+					<div class="col-md-5">
+						<span class="obligatorio">*</span>
+						<h:outputLabel value="#{msgMarketing.lbl_donde_trabaja}" 
+								for="ocupacionTut"/>
+					</div>
+					<div class="col-md-7">
+						<h:selectOneMenu id="ocupacionTut" styleClass="form-control" 
+							required="true"
+							requiredMessage="#{messageSource['msg_dato_requerido']}"
+							value="#{mbRegistro.form.datoLaboral.empresa}"
+							readonly="#{mbRegistro.form.modoLectura}"
+							disabled="#{mbRegistro.form.modoLectura}"
+							valueChangeListener="#{mbRegistro.form.cambiaValorEmpresa}">
+		
+							<f:converter converterId="empresaConverter" />
+							
+							<f:selectItem itemDisabled="true" noSelectionOption="true" 
+								itemLabel="#{messageSource['lbl_selecciona']}" itemValue="#{null}" />
+								
+							<f:selectItems value="#{mbRegistro.form.empresas}" 
+								var="objeto"
+							    itemLabel="#{objeto.nombre}"
+							    itemValue="#{objeto}"/>
+							    
+							<p:ajax event="change" 
+								update="cualTrab infoEmpresaCB"
+								process="@this"
+								listener="#{mbRegistro.verificaBecaPor}"
+								onstart="PF('blockUI').block()"
+								oncomplete="PF('blockUI').unblock()" />
+							
+						</h:selectOneMenu>
+						<p:message id="messageOcuTut" for="ocupacionTut" display="text" />					
+					</div>
+				</div>
+<!-- CUAL TRABAJO				 -->
+				<div class="row form-group">
+					<div class="col-md-5">
+						<span class="obligatorio">*</span>
+						<h:outputLabel value="#{msgMarketing.lbl_cual_trabaja}" 
+								for="cualTrab"/>
+					</div>
+					<div class="col-md-7">
+						<p:inputText id="cualTrab" styleClass="form-control"
+							placeholder="#{msgMarketing.lbl_cual_trabaja_sin}" 
+							value="#{mbRegistro.form.datoLaboral.cualEmpresa}"
+							required="#{!mbRegistro.form.soloLecturaOtraEmpresa}" 
+							readonly="#{mbRegistro.form.soloLecturaOtraEmpresa}"
+							maxlength="50"
+							requiredMessage="#{messageSource['msg_dato_requerido']}">
+				
+							<f:converter converterId="limpiaCaracteresEspeciales"/>
+							<p:ajax event="blur" update="messageCualTrab"/>
+							
+						</p:inputText>
+						<p:message id="messageCualTrab" for="cualTrab" display="text" />
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-xs-6">
+<!-- EL MENSAJE DE LA BECA -->
+				<p:messages id="infoEmpresaCB" for="infoEmpresaConBeca" showDetail="true" closable="true" autoUpdate="false"/>
+			</div>
+		</div>
+	</section>
+</ui:component>	

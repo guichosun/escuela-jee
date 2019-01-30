@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sf="http://www.springframework.org/tags/faces"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:qr="http://qr.mx/ui">
+	
+	<pe:blockUI target="@form" widgetVar="blockUI" >
+		<h:graphicImage library="img" name="loader.gif" width="70" />
+	</pe:blockUI>
+	<p:remoteCommand name="llamaHome" action="home" />
+	<section>
+		<qr:sistemaEstudios escolaridad="#{mbHome.sistemaEstudio.escolaridad}" 
+			modalidad="#{mbHome.sistemaEstudio.modalidad}" refrescarValor="#{mbRegistro.form.limpia()}"/>
+<hr/>		
+		<div class="row form-group">
+<!-- 		EL COMBO DE CARRERAS -->
+			<div class="col-md-6">
+				<h:selectOneMenu id="cmbCarreras" styleClass="form-control" 
+					required="true"
+					requiredMessage="#{messageSource['msg_dato_requerido']}"
+					value="#{mbRegistro.form.carreraSeleccionada}" >
+
+					<f:converter converterId="carreraConverter" />
+					<f:selectItem itemDisabled="true" 
+						itemLabel="#{msg_generales.lbl_selecciona}" itemValue="#{null}" />
+					<f:selectItems value="#{mbHome.carreras}" 
+						var="objeto"
+					    itemLabel="#{objeto.nombre}"
+					    itemValue="#{objeto}"/>
+					    
+					<p:ajax event="change" 
+						update="@form"
+						listener="#{mbRegistro.muestraInformacionCarrera()}"
+						onstart="PF('blockUI').block()"
+						oncomplete="PF('blockUI').unblock()"/>
+					
+				</h:selectOneMenu>
+				<p:message for="cmbCarreras" display="text" autoUpdate="true"/>
+			</div>
+			<div class="col-md-6">
+				<h:outputText value="#{mbRegistro.form.carreraSeleccionada.nombre}" />
+			</div>
+		</div>
+<hr/>		
+    	<div class="row">
+    		<div class="col-md-6">
+	            <div class="row">
+	            	<div class="col-md-6 form-group">
+	                	<h:outputLabel value="#{msgCA.ca_plan}" for="plan"/>
+	                </div>
+	                <div class="col-md-6 form-group">
+	                	<p:inputText id="plan" value="Semestral" readonly="true" styleClass="form-control">
+	                	</p:inputText>
+	                </div>
+	                <div class="col-md-6 form-group">
+	                	<h:outputLabel value="#{msgCA.ca_duracion}" for="duracion"/>
+	                </div>
+	                <div class="col-md-6 form-group">
+	                	<p:inputText id="duracion" value="#{mbRegistro.form.duracion}" 
+	                		readonly="#{mbRegistro.form.cicloConveniente}" styleClass="form-control">
+	                	</p:inputText>
+	                </div>
+	            </div>
+            </div>
+        	<div class="col-md-6">
+	        	<div class="row">
+	            	<div class="col-md-6 form-group">
+	                	<h:outputLabel value="#{msgCA.ca_numero_ciclos}" for="numciclos"/>
+	                </div>
+	                <div class="col-md-6 form-group">
+	                	<p:inputText id="numciclos" value="#{mbRegistro.form.cantidadCiclos}" 
+	                		readonly="#{mbRegistro.form.cicloConveniente}" styleClass="form-control">
+	                	</p:inputText>
+	                </div>
+	                <div class="col-md-6 form-group">
+	                	<h:outputLabel value="#{msgCA.ca_numero_periodos}" for="numperiodos"/>
+	                </div>
+	                <div class="col-md-6">
+	                	<p:inputText id="numperiodos" value="#{mbRegistro.form.cantidadPeriodosPorCiclo}" 
+	                		readonly="#{mbRegistro.form.cicloConveniente}" styleClass="form-control">
+	                	</p:inputText>
+	                </div>
+	            </div>
+            </div>
+		</div>
+<hr/>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-6">
+						<h:outputLabel value="#{msgCA.ca_generacion}" for="generacion"/>
+			    	</div>
+					<div class="col-md-6">
+						<p:inputMask mask="9999 - 9999" id="generacion" 
+							value="#{mbRegistro.form.mascaraGeneracion}" 
+							readonly="#{mbRegistro.form.cicloConveniente}" styleClass="form-control">
+						</p:inputMask>
+			    	</div>
+			    </div>
+		    </div>
+<!-- 			<div class="col-md-6"> -->
+<!-- 				<div class="row"> -->
+<!-- 					<div class="col-md-8"> -->
+<!-- 						<div class="row"> -->
+<!-- 							<div class="col-md-7"> -->
+<!-- 								<h:outputLabel value="¿Ciclo conveniente?" /> -->
+<!-- 							</div> -->
+<!-- 							<div class="col-md-5"> -->
+<!-- 								<p:selectBooleanButton id="value1" value="#{mbRegistro.form.cicloConveniente}"  -->
+<!-- 									onLabel="Si" offLabel="No" style="width:60px" -->
+<!-- 									disabled="${empty mbRegistro.form.carreraSeleccionada}"> -->
+<!-- 									<p:ajax update="generacion duracion numciclos btnProsCiclo"></p:ajax> -->
+<!-- 								</p:selectBooleanButton> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 			    	</div> -->
+<!-- 					<div class="col-md-4"> -->
+<!-- 						<p:commandButton id="btnProsCiclo" value="Procesar" icon="ui-icon-check" -->
+<!-- 							disabled="#{mbRegistro.form.cicloConveniente}"/> -->
+<!-- 			    	</div> -->
+<!-- 			    </div> -->
+<!-- 		    </div> -->
+		</div>		
+	</section>
+</ui:component>

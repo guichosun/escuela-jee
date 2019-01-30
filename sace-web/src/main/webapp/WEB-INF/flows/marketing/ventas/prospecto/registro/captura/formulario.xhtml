@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sf="http://www.springframework.org/tags/faces"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:qr="http://qr.mx/ui"
+	template="/templates/template.xhtml">
+
+	<ui:define name="CONTENT">
+		<div class="container">
+			
+			<qr:migaja 
+				listaEtapa="#{mbRegistro.form.migajas}"
+				accion="#{mbRegistro.form.accionModulo.label}"/>
+
+			<seccion class="titulo">
+				<div class="row">
+					<div class="col-md-1">
+						
+						<qr:hamburguesa
+							accion="captura"  
+							consultaLink="#{request.contextPath}/app/marketing/ventas/prospecto/registro/consumo?como=3"
+							modificaLink="nolink"
+							eliminaLink="nolink"/>
+						
+					</div>
+					<div class="col-md-11">
+						<h1><h:outputText value="#{msgMarketing['lbl_marketing_registro_prospectos_titulo']}"/></h1>
+					</div>
+				</div>		
+			</seccion>
+		    			
+			<h:form id="theForm" binding="#{theForm}" >			
+				<p class="help-block">Los campos con (<span class="obligatorio">*</span>) son requeridos.</p>				
+
+				<p:growl for="mensajesInfo" autoUpdate="true" id="growlExito" />				
+				<p:messages for="mensajesError" autoUpdate="true"/>
+				<p:messages for="mensajesAdvertenciaMain" autoUpdate="true"/>					
+
+				<c:choose>
+					<c:when test="#{mbRegistro.form.prospectosRegistrados}">
+						<ui:include src="../combos.xhtml"/>
+						<ui:include src="../datosPersonales.xhtml"/>
+						<ui:include src="../historialAcademico.xhtml"/>
+						<ui:include src="../datosEstadisticos.xhtml"/>
+						<ui:include src="../presupuesto.xhtml"/>
+					</c:when>
+					<c:otherwise>
+						<section>
+							<div class="row">
+								<div class="col-md-6">
+									<p>#{messageSource['msg_sin_informacion']}</p>
+								</div>
+							</div>
+						</section>
+					</c:otherwise>
+				</c:choose>
+<!-- Con este elemento se genera la flecha de Scroll to top :) -->
+			<a href="#" title="Subir" class="back-to-top" style="display: none;"><i class="fa fa-chevron-circle-up"></i></a>
+							
+				<div id="botones" class="form-group text-center">
+					<sec:authorize ifAnyGranted="ROLE_MKT_DIR, ROLE_MKT">
+						<p:blockUI block="theForm"
+							trigger="btnGuardar">
+
+							<h:graphicImage library="img" name="loader.gif" width="70" />
+	
+							<h:outputText value="#{messageSource['msg_procesando_informacion']}"
+								style="white-space: nowrap;" />
+						</p:blockUI>
+						<p:commandButton value="#{messageSource['lbl_button_Aceptar']}"
+							id="btnGuardar" 							
+							ajax="false"
+					 		action="#{mbRegistro.guardaHandler}" >
+					 		
+<!-- 					 		<p:fileDownload value="#{mbRegistro.contenido}" ></p:fileDownload> -->
+					 		
+					 	</p:commandButton>
+					</sec:authorize>
+				</div>
+			</h:form>
+		</div>
+	</ui:define>
+
+</ui:composition>

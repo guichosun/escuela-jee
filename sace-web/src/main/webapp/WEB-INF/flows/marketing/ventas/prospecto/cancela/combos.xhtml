@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sf="http://www.springframework.org/tags/faces"
+	xmlns:qr="http://qr.mx/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+	<pe:blockUI target="@form" widgetVar="blockUI" >
+		<h:graphicImage library="img" name="loader.gif" width="70" />
+	</pe:blockUI>
+	
+	<section>
+	
+<!-- 			<qr:sistemaEstudios escolaridad="#{mbRegistro.form.sistemaEstudioFormulario.escolaridad}"  -->
+<!-- 				modalidad="#{mbRegistro.form.sistemaEstudioFormulario.modalidad}" refrescarValor="#{mbRegistro.form.limpia()}"/> -->
+
+			<div class="row form-group">
+			<div class="col-md-8">
+				<div class="row">
+					<div class="col-md-6">
+						<p:selectOneRadio id="escolaridad" required="true" styleClass=""
+							requiredMessage="#{msg_generales.msg_dato_requerido}"
+							value="#{mbRegistro.form.sistemaEstudioFormulario.escolaridad.idEscolaridad}"
+							valueChangeListener="#{mbRegistro.form.limpiaSeleccionEscolaridad()}">
+				            
+							<f:selectItems value="#{mbHome.lasEscolaridades()}" 
+								var="objeto"
+							    itemLabel="#{objeto.descripcion}"
+							    itemValue="#{objeto.idEscolaridad}"/>
+	            
+							<p:ajax 
+								update="#{theForm.id}"
+								onstart="PF('blockUI').block()"
+								oncomplete="PF('blockUI').unblock()"/>
+	
+				        </p:selectOneRadio>
+				        <p:message id="messageEsc" for="escolaridad" display="text" />
+					</div>
+					<div class="col-md-6">
+						<p:selectOneRadio id="modalidad" required="true" styleClass=""
+							requiredMessage="#{msg_generales.msg_dato_requerido}" 
+							value="#{mbRegistro.form.sistemaEstudioFormulario.modalidad.idModalidad}">
+							
+							<f:selectItems value="#{mbHome.lasModalidadesPorEscolaridad(
+							mbRegistro.form.sistemaEstudioFormulario)}" 
+								var="objeto"
+							    itemLabel="#{objeto.descripcion}"
+							    itemValue="#{objeto.idModalidad}"/>
+							    
+					            <p:ajax update="#{theForm.id}"
+					            	listener="#{mbRegistro.form.limpiaSeleccionModalidad()}"
+									 event="change"  
+									 onstart="PF('blockUI').block()"
+									 oncomplete="PF('blockUI').unblock()"/>
+		
+				        </p:selectOneRadio>
+				        <p:message id="messageMod" for="modalidad" display="text" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+<!-- 		EL COMBO DE CARRERAS -->
+		<div class="row form-group">
+			<div class="col-md-5">
+				<label>
+					<span class="obligatorio">*</span>
+					<h:outputText id="lblCarrCMB" value="Carreras:"/>
+				</label>
+				<h:selectOneMenu id="cmbCarreras" styleClass="form-control" 
+					required="true"
+					requiredMessage="#{messageSource['msg_dato_requerido']}"
+					value="#{mbRegistro.form.carreraSeleccionada}" >
+
+					<f:converter converterId="carreraConverter" />
+					<f:selectItem itemDisabled="true" 
+						itemLabel="#{messageSource['lbl_selecciona']}" itemValue="#{null}" />
+						
+					<f:selectItems value="#{mbHome.obtieneCarreras(mbRegistro.form.sistemaEstudioFormulario.escolaridad.idEscolaridad,
+					mbRegistro.form.sistemaEstudioFormulario.modalidad.idModalidad)}" 
+						var="objeto"
+					    itemLabel="#{objeto.nombre}"
+					    itemValue="#{objeto}"/>
+					    
+					<p:ajax event="change" 
+						update="#{theForm.id}"
+						listener="#{mbRegistro.form.muestraCarrera()}" 
+						onstart="PF('blockUI').block()"
+						oncomplete="PF('blockUI').unblock()"/>
+					
+				</h:selectOneMenu>
+				<p:message for="cmbCarreras" display="text" autoUpdate="true"/>
+			</div>
+		</div>
+<hr/>
+		<div class="row form-group">
+			<div class="col-md-6">
+				<label>
+					<h:outputText id="lblCarr" value="Buscar Matricula:"/>
+				</label>
+				<p:autoComplete id="alumnoBusqueda" dropdown="true"  
+					value="#{mbRegistro.form.dominio}" required="true" 
+					completeMethod="#{mbRegistro.completa}" maxlength="120"
+					maxResults="7" size="50" queryDelay="1000"
+					var="alumno" itemLabel="#{alumno.etiquetaMatriculaYNombre()}" itemValue="#{alumno}" 
+					converter="alumnoConverter"
+					requiredMessage="#{msg_generales.msg_dato_requerido}">
+					
+					<f:attribute name="sistemaEstudio" value="#{mbRegistro.form.sistemaEstudioFormulario}"/>
+					<f:attribute name="estatusAlumno" value="#{mbRegistro.form.estatusAlumno}"/>
+					<p:ajax event="itemSelect"
+						listener="#{mbRegistro.onItemSelect}"
+						partialSubmit="true"  
+						update="@form" />
+					
+				</p:autoComplete>
+			</div>
+		</div>
+	</section>
+</ui:component>

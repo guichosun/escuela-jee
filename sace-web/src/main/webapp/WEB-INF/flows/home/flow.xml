@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        				  http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	start-state="seleccionaHome" parent="parent-flow">
+
+	<!-- Cada abajo de flows podria tener su propio floe de home y aqui se podrian 
+		redirigir a esos subflows -->
+	
+	<action-state id="seleccionaHome">
+		<evaluate expression="mbHome.homeInteligente()" />
+		<transition on="homeROOT" to="homeView"/>	
+		<transition on="sucMKT" to="SFhomeMKT"/>	
+		<transition on="sucFNZ" to="SFhomeFNZ"/>	
+		<transition on="sucCE" to="SFhomeCE"/>	
+		<transition on="sucCA" to="SFhomeCA"/>	
+<!-- 		
+	Agregar los otros homes de cada area 
+-->
+	</action-state>
+	
+	<view-state id="homeView" view="inicio.xhtml">
+	</view-state>
+	
+	<subflow-state id="SFhomeMKT" subflow="marketing">
+		<transition on="esHome" to="esHome"></transition>
+	</subflow-state>
+	
+	<subflow-state id="SFhomeFNZ" subflow="finanzas">
+		<transition on="esHome" to="esHome"></transition>
+	</subflow-state>
+	
+	<subflow-state id="SFhomeCE" subflow="ctrl_escolar">
+		<transition on="esHome" to="esHome"></transition>
+	</subflow-state>
+	
+	<subflow-state id="SFhomeCA" subflow="ctrl_academico">
+		<transition on="esHome" to="esHome"></transition>
+	</subflow-state>
+	
+</flow>

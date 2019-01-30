@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://java.sun.com/jsf/composite">
+	
+	<cc:interface >
+		<cc:attribute name="homeLink" default="#{request.contextPath}/app/home" shortDescription="Enlace a Home"></cc:attribute>
+		<cc:attribute name="listaEtapa" type="java.util.List" tyshortDescription="Lista de Etapas"></cc:attribute>
+		<cc:attribute name="accion" shortDescription="La acción actual"></cc:attribute>
+		<cc:attribute name="manual" default="false" shortDescription="Si las opciones de la miga son manuales o por Lista. default false"></cc:attribute>
+		
+	</cc:interface>	
+	
+	<cc:implementation>
+		<ol class="breadcrumb">
+		    <li><a href="#{cc.attrs.homeLink}">Inicio</a></li>
+		    <c:choose>
+		    	<c:when test="#{cc.attrs.manual}">
+		    	</c:when>
+		    	<c:otherwise>
+					<ui:repeat var="etapa" value="#{cc.attrs.listaEtapa}">
+				    	<li>#{etapa}</li>
+				    </ui:repeat>		    	
+		    	</c:otherwise>
+		    </c:choose>
+		    <li class="active">#{cc.attrs.accion}</li>
+		</ol>
+	</cc:implementation>
+</ui:component>
+

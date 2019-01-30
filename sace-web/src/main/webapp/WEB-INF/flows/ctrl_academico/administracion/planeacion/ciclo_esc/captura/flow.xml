@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        				  http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	  start-state="registro" parent="parent-flow">
+	  
+	<secured attributes="ROLE_CA_DIR, ROLE_ROOT" match="any"/>
+
+	<var name="mbRegistro" class="mx.qr.sace.mb.MBPlaneacionCiclo"/>
+	
+	<view-state id="registro" view="formulario.xhtml">
+		<on-entry>
+			<evaluate expression="mbRegistro.inicializa()" />
+			<evaluate expression="mbRegistro.inicializaForm(1)" />
+		</on-entry>
+		<transition on="guarda" to="registro" />
+		<transition on="cancelar" to="esHome" />
+	</view-state>
+</flow> 

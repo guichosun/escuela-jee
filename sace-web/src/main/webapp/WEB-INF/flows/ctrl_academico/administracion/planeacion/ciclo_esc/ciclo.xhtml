@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sf="http://www.springframework.org/tags/faces"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+<!-- #{fn:length(dtBasicView.cars)} -->
+<h3>#{msgCA.ca_config_ciclo}</h3>
+<section>
+	<div class="row">
+		<div class="col-md-6 form-group">
+			<div class="row form-group">
+				<div class="col-md-6">
+					<h:outputLabel value="#{msgCA.ca_plan}" for="ce"/>
+				</div>
+				<div class="col-md-6">
+					<p:inputText id="ce" value="#{mbRegistro.form.dominio.clave}" 
+						styleClass="form-control"
+        				maxlength="15" placeholder="Clave ciclo" required="true"
+        				requiredMessage="#{msg_generales.msg_dato_requerido}">
+        				
+        				<p:ajax event="blur" update="ceM"/>
+        				
+       				</p:inputText>
+        				
+       				<p:message id="ceM" for="ce" 
+						display="text"/>
+				</div>
+			</div>
+			<div class="row form-group">
+				<div class="col-md-6">
+					<h:outputLabel value="Fecha inicial" for="fiC"/>
+				</div>
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-md-3">
+							<p:inputText styleClass="form-control" id="dia" 
+									value="" placeholder="Día"
+									maxlength="2" 
+									required="true"
+									requiredMessage="#{msg_generales.msg_dato_requerido}"  
+									validatorMessage="#{msg_generales.msg_dia_no_valido}">
+								
+	<!-- 											<pe:keyFilter mask="num" /> -->
+								
+								<f:validateLongRange minimum="1" maximum="31" />
+								<p:ajax event="blur" update="messageDiaNac msgFechaNacimiento"/>
+								
+							</p:inputText>
+							<p:message for="dia" display="text" autoUpdate="true" id="messageDiaNac"/>
+						</div>
+						<div class="col-md-6">
+							<h:selectOneMenu styleClass="form-control" id="mes"
+								required="true" 
+								requiredMessage="#{messageSource['msg_dato_requerido']}"
+								value="#{mbRegistro.form.mes}">
+
+								<f:selectItem noSelectionOption="true" itemLabel="mes" itemValue="" />
+								<f:selectItems  
+									value="#{mbRegistro.form.meses}" />
+									<p:ajax event="blur" update="messageMes"/>
+								
+							</h:selectOneMenu>
+							<p:message for="mes" display="text" autoUpdate="true" id="messageMes"/>
+						</div>
+						<div class="col-md-3">
+							<p:inputText styleClass="form-control" id="anho" 
+									value="#{mbRegistro.form.anho}" placeholder="Año" 
+									required="true" maxlength="4" 
+									requiredMessage="#{messageSource['msg_dato_requerido']}"
+									validatorMessage="#{messageSource['msg_no_valido']}">
+								
+								<f:validateLongRange minimum="1910" maximum="2014" />
+								<p:ajax event="blur" update="messageAnho"/>
+								
+							</p:inputText>
+							<p:message for="anho" display="text" autoUpdate="true" id="messageAnho"/>
+						</div>
+					</div>
+					<p:messages for="fechaNacimiento" id="msgFechaNacimiento" autoUpdate="true"/>
+				</div>
+			</div>
+			<div class="row form-group">
+				<div class="col-md-6">
+					<h:outputLabel value="Fecha termino" for="fiC"/>
+				</div>
+				<div class="col-md-6">
+					<p:calendar id="ffC" value="#{mbRegistro.form.dominio.fechaTermino}" 
+						placeholder="#{msg_generales.ayuda_formato_fecha}"
+		            	navigator="true" pattern="dd-MMM-yyyy" showOn="button" locale="es"
+		            	required="true"
+		            	mindate="#{mbRegistro.form.dominio.fechaInicio}"
+		            	requiredMessage="#{msg_generales.msg_dato_requerido}">
+		            	
+<!-- 		            	<p:ajax event="blur" update="ffCM"/> -->
+		            	
+		            </p:calendar>
+		            <p:message id="ffCM" for="ffC" 
+						display="text"/>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<p:dataTable id="tablaPeriodos" 
+				var="periodo" 
+				value="#{mbRegistro.form.periodos}">
+				<p:column headerText="Nombre periodo">
+					<p:inputText value="#{periodo.nombre}" styleClass="form-control"
+      					maxlength="15" placeholder="Nombre periodo" 
+      					required="true" requiredMessage="#{msg_generales.msg_dato_requerido}"/>               
+		        </p:column>	        
+				<p:column headerText="Fecha Inicial">
+					<p:calendar id="fiP" value="#{periodo.fechaInicio}"
+                  		navigator="true" pattern="dd-MMM-yyyy" showOn="button" locale="es"
+                  		mindate="#{mbRegistro.form.minDate}"
+                  		required="true"
+                  		placeholder="#{msg_generales.ayuda_formato_fecha}"
+                  		requiredMessage="#{msg_generales.msg_dato_requerido}">
+                  		
+                  		<p:ajax event="dateSelect" update="ffP" />
+                  		<p:ajax event="blur" update="fiPM"/>
+                  		
+                 	</p:calendar>
+                 	<p:message id="fiPM" for="fiP" 
+						display="text"/>
+		        </p:column>	        
+				<p:column headerText="Fecha final">
+					<p:calendar id="ffP" value="#{periodo.fechaTermino}"
+                    	navigator="true" pattern="dd-MMM-yyyy" showOn="button" locale="es"
+                        mindate="#{periodo.fechaInicio}"
+                        required="true"
+                        placeholder="#{msg_generales.ayuda_formato_fecha}"
+                        requiredMessage="#{msg_generales.msg_dato_requerido}">
+                        
+                        <p:ajax event="blur" update="ffPM"/>
+                        
+                        </p:calendar>
+                    <p:message id="ffPM" for="ffP" 
+						display="text"/>
+		        </p:column>	        
+		        <f:facet name="footer">
+			        Son #{fn:length(mbRegistro.form.dominio.periodosEscolares)} periodos del ciclo #{mbRegistro.form.dominio.clave}.
+			    </f:facet>
+			</p:dataTable>
+		</div>
+	</div>
+</section>
+
+</ui:component>
+

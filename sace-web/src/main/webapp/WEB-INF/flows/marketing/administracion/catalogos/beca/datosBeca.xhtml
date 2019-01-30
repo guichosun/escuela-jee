@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sf="http://www.springframework.org/tags/faces"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+	<pe:blockUI target="@form" widgetVar="blockUI">
+		<h:graphicImage library="img" name="loader.gif" width="70" />
+	</pe:blockUI>
+
+	<section>
+	<c:if test="#{mbRegistro.form.accionModulo.name ne 'captura'}">
+		<div class="row">
+			<div class="col-md-6">
+				<h:outputLabel value="Becas:" 
+					for="cmbBecas" />
+				<h:selectOneMenu id="cmbBecas" styleClass="form-control" 
+					value="#{mbRegistro.form.dominio}" >
+
+					<f:converter converterId="becaConverter" />
+					<f:selectItem itemDisabled="true" 
+						itemLabel="#{messageSource['lbl_selecciona']}" itemValue="#{null}" />
+					<f:selectItems value="#{mbRegistro.form.becas}" 
+						var="objeto"
+					    itemLabel="#{objeto.nombre}"
+					    itemValue="#{objeto}"/>
+<!-- 					     event="change" -->
+					<p:ajax listener="#{mbRegistro.muestraDescuentos()}" 
+						update="@form" 
+						onstart="PF('blockUI').block()"
+						oncomplete="PF('blockUI').unblock()"/>
+					
+				</h:selectOneMenu>
+				<p:message for="cmbBecas" display="text" autoUpdate="true"/>
+			</div>
+		</div>
+		<hr/>
+	</c:if>
+	<c:if test="#{!empty mbRegistro.form.dominio}">
+		<div class="row">
+			<div class="col-md-6">
+				<!--NombreBeca-->
+				<div class="row form-group">
+					<div class="col-md-10">
+						<span class="obligatorio">*</span> 
+						<h:outputLabel value="#{msgMarketing.lbl_nombre_beca}" 
+							for="nombeca"/>
+						<p:inputText id="nombeca" styleClass="form-control"
+							placeholder="#{msgMarketing.lbl_nombre_beca_sin}" required="true"
+							maxlength="50" 
+							value="#{mbRegistro.form.dominio.nombre}"
+							requiredMessage="#{messageSource['msg_dato_requerido']}"
+							readonly="#{mbRegistro.form.modoLectura}">
+							
+							<f:converter converterId="limpiaCaracteresEspeciales"/>
+							<p:ajax event="blur" update="msgBeca"/>
+							
+						</p:inputText>
+						<p:message id="msgBeca" for="nombeca" display="text"/>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-md-10">
+						<h:outputLabel value="#{msg_generales.lbl_estatus}" 
+							for="estatus"/>
+						<p:selectOneRadio id="estatus" 
+							value="#{mbRegistro.form.dominio.estatus}" 
+							disabled="#{mbRegistro.form.modoLectura}">
+				
+							<f:selectItems value="#{mbRegistro.form.estatusRegistro}"></f:selectItems>
+				            
+					    </p:selectOneRadio>
+					    <p:message for="estatus" display="text"/>
+					</div>
+				</div>
+			</div>
+			<!--columna2-->
+			<div class="col-md-6">
+				<!--Descripcion-->
+				<div class="row form-group">
+					<div class="col-md-10">
+						<h:outputLabel value="#{msg_generales.lbl_descripcion}" 
+							for="descripcion"/>
+						<p:inputTextarea styleClass="form-control" id="descripcion"
+							value="#{mbRegistro.form.dominio.descripcion}" 
+							maxlength="300" rows="4"
+							autoResize="false" counter="contadorDescripcion"
+							counterTemplate="#{msg_generales.lbl_display_counts}"
+							readonly="#{mbRegistro.form.modoLectura}">
+	
+							<f:converter converterId="limpiaCaracteresEspeciales" />
+							<p:ajax event="blur" update="messageDesc" />		
+	
+						</p:inputTextarea>
+						<p:message id="messageDesc" for="descripcion" display="text"
+							autoUpdate="true" />
+						<p:outputLabel id="contadorDescripcion"
+							styleClass="help-block text-right" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if>
+	</section>
+</ui:component>

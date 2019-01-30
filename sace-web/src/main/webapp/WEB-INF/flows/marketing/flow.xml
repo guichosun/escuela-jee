@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+         http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	start-state="homeView" parent="parent-flow">
+	
+	<secured attributes="ROLE_MKT_DIR, ROLE_MKT, ROLE_ROOT" match="any"/>
+
+<!-- Inicializar todas las variables de este home -->
+	<var name="mbHomeMKT" class="mx.qr.sace.mb.MBHomeMarketing" />
+
+	<on-start>
+		<evaluate expression="mbHomeMKT.initHome()"></evaluate>
+		<evaluate expression="mbHomeMKT.inicializaSistemaEstudios()"></evaluate>
+	</on-start>
+
+	
+	<view-state id="homeView" view="inicio.xhtml">
+		<transition on="seguimiento" to="SFSeguimiento">
+			<set name="flowScope.prospecto" value="mbHomeMKT.prospectoSeleccionado"
+				type="mx.qr.sace.persistencia.entidades.Alumno"></set>
+		</transition>
+	</view-state>
+
+	<subflow-state id="SFSeguimiento" subflow="marketing/ventas/seguimiento/captura">
+		<input name="prospectoDeAlerta" value="flowScope.prospecto" />
+	</subflow-state>
+		
+	<end-state id="seguimientoES" view="externalRedirect:servletRelative:/marketing/ventas/seguimiento/captura">
+	
+	</end-state>
+	
+</flow>
