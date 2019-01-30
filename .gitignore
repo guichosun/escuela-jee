@@ -1,0 +1,8 @@
+
+
+.project
+.settings/
+.svn/
+.classpath
+sac*/.classpath
+sac*/.settings
